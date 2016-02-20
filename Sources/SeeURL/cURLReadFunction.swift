@@ -6,11 +6,11 @@
 //  Copyright © 2015 PureSwift. All rights reserved.
 //
 
-#if os(Linux)
+#if os(OSX) || os(iOS)
+    import cURL
+#elseif os(Linux)
     import CcURL
 #endif
-
-import SwiftFoundation
 
 public extension cURL {
     
@@ -20,11 +20,11 @@ public extension cURL {
     
     public final class ReadFunctionStorage {
         
-        public let data: Data
+        public var data: [UInt8]
         
         public var currentIndex = 0
         
-        public init(data: Data) {
+        public init(data: [UInt8]) {
             
             self.data = data
         }
@@ -41,9 +41,9 @@ public func curlReadFunction(pointer: UnsafeMutablePointer<Int8>, size: Int, nme
     
     guard (size * nmemb) > 0 else { return 0 }
     
-    guard currentIndex < data.byteValue.count else { return 0 }
+    guard currentIndex < data.count else { return 0 }
     
-    let byte = data.byteValue[currentIndex]
+    let byte = data[currentIndex]
     
     let char = CChar(byte)
     

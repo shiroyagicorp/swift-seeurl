@@ -6,7 +6,9 @@
 //  Copyright © 2015 PureSwift. All rights reserved.
 //
 
-#if os(Linux)
+#if os(OSX) || os(iOS)
+    import cURL
+#elseif os(Linux)
     import CcURL
 #endif
 
@@ -18,7 +20,7 @@ public extension cURL {
     
     public final class WriteFunctionStorage {
         
-        public var data = [CChar]()
+        public var data = [UInt8]()
         
         public init() { }
     }
@@ -34,7 +36,7 @@ public func curlWriteFunction(contents: UnsafeMutablePointer<Int8>, size: Int, n
     
     for _ in 1...realsize {
         
-        let byte = pointer.memory
+        let byte = unsafeBitCast(pointer.memory, UInt8.self)
         
         storage.data.append(byte)
         

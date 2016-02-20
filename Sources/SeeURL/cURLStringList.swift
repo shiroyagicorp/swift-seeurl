@@ -6,7 +6,9 @@
 //  Copyright © 2015 PureSwift. All rights reserved.
 //
 
-#if os(Linux)
+#if os(OSX) || os(iOS)
+    import cURL
+#elseif os(Linux)
     import CcURL
 #endif
 

@@ -12,8 +12,6 @@
     import CcURL
 #endif
 
-import SwiftFoundation
-
 /// Class that encapsulates cURL handler.
 public final class cURL {
     
@@ -96,11 +94,9 @@ public final class cURL {
         guard code.rawValue == CURLE_OK.rawValue else { throw cURL.Error(rawValue: code.rawValue)! }
     }
     
-    public func setOption(option: Option, _ value: Data) throws {
+    public func setOption(option: Option, _ value: [UInt8]) throws {
         
-        var bytes = unsafeBitCast(value.byteValue, [CChar].self)
-        
-        let code = curl_easy_setopt_string(internalHandler, option, &bytes)
+        let code = curl_easy_setopt_string(internalHandler, option, unsafeBitCast(value, [Int8].self))
         
         guard code.rawValue == CURLE_OK.rawValue else { throw cURL.Error(rawValue: code.rawValue)! }
     }
@@ -119,9 +115,9 @@ public final class cURL {
         guard code.rawValue == CURLE_OK.rawValue else { throw cURL.Error(rawValue: code.rawValue)! }
     }
     
-    public func setOption(option: Option, inout _ value: Data) throws {
+    public func setOption(option: Option, inout _ value: [Int8]) throws {
         
-        let code = curl_easy_setopt_pointer(internalHandler, option, &value.byteValue)
+        let code = curl_easy_setopt_pointer(internalHandler, option, &value)
         
         guard code.rawValue == CURLE_OK.rawValue else { throw cURL.Error(rawValue: code.rawValue)! }
     }

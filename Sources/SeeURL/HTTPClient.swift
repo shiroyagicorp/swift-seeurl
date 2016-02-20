@@ -12,21 +12,26 @@
     import CcURL
 #endif
 
-import SwiftFoundation
-
 /// Loads HTTP requests
-public struct HTTPClient: URLClient {
+public struct HTTPClient {
     
     public init() { }
     
     public var verbose = false
     
-    public func sendRequest(request: HTTP.Request) throws -> HTTP.Response {
-        
-        // Only HTTP 1.1 is supported
-        guard request.version == HTTP.Version(1, 1) else { throw Error.BadRequest }
-        
-        let url = request.URL
+    public struct Options {
+        let timeoutInterval: Int
+        init() {
+            self.timeoutInterval = 30
+        }
+        public init(timeoutInterval: Int) {
+            self.timeoutInterval = timeoutInterval
+        }
+    }
+    
+    public typealias Header = (String, String)
+    
+    public func sendRequest(method: String, url: String, headers: [Header] = [], body: [UInt8] = [], options: Options = Options()) throws -> (Int, [Header], [UInt8]) {
         
         let curl = cURL()
         
@@ -34,41 +39,41 @@ public struct HTTPClient: URLClient {
         
         try curl.setOption(CURLOPT_URL, url)
         
-        try curl.setOption(CURLOPT_TIMEOUT, cURL.Long(request.timeoutInterval))
+        try curl.setOption(CURLOPT_TIMEOUT, cURL.Long(options.timeoutInterval))
         
         // append data
-        if let bodyData = request.body {
+        if body.count > 0 {
             
-            try curl.setOption(CURLOPT_POSTFIELDS, bodyData)
+            try curl.setOption(CURLOPT_POSTFIELDS, body)
             
-            try curl.setOption(CURLOPT_POSTFIELDSIZE, bodyData.byteValue.count)
+            try curl.setOption(CURLOPT_POSTFIELDSIZE, body.count)
         }
         
         // set HTTP method
-        switch request.method {
+        switch method.uppercaseString {
             
-        case .HEAD:
+        case "HEAD":
             try curl.setOption(CURLOPT_NOBODY, true)
-            try curl.setOption(CURLOPT_CUSTOMREQUEST, request.method.rawValue)
+            try curl.setOption(CURLOPT_CUSTOMREQUEST, "HEAD")
             
-        case .POST:
+        case "POST":
             try curl.setOption(CURLOPT_POST, true)
             
-        case .GET: try curl.setOption(CURLOPT_HTTPGET, true)
+        case "GET": try curl.setOption(CURLOPT_HTTPGET, true)
             
         default:
             
-            try curl.setOption(CURLOPT_CUSTOMREQUEST, request.method.rawValue)
+            try curl.setOption(CURLOPT_CUSTOMREQUEST, method.uppercaseString)
         }
         
         // set headers
-        if request.headers.count > 0 {
+        if headers.count > 0 {
             
             var curlHeaders = [String]()
             
-            for (header, headerValue) in request.headers {
+            for header in headers {
                 
-                curlHeaders.append(header + ": " + headerValue)
+                curlHeaders.append(header.0 + ": " + header.1)
             }
             
             try curl.setOption(CURLOPT_HTTPHEADER, curlHeaders)
@@ -93,15 +98,11 @@ public struct HTTPClient: URLClient {
         
         let responseCode = try curl.getInfo(CURLINFO_RESPONSE_CODE) as Int
         
-        var response = HTTP.Response()
-        
-        response.statusCode = responseCode
-        
         // TODO: implement header parsing
         
-        response.body = unsafeBitCast(responseBodyStorage.data, Data.self)
+        let resBody = responseBodyStorage.data
         
-        return response
+        return (responseCode, [], resBody)
     }
     
     public enum Error: ErrorType {
