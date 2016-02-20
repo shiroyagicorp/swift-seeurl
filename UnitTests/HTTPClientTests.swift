@@ -14,7 +14,7 @@
 
 import XCTest
 import SeeURL
-import SwiftFoundation
+
 
 final class HTTPClientTests: XCTestCase {
     
@@ -24,25 +24,43 @@ final class HTTPClientTests: XCTestCase {
 
     func testStatusCode() {
         
-        let originalStatusCode = HTTP.StatusCode.OK
+        let url = "https://httpbin.org/status/200"
         
-        var url = SwiftFoundation.URL(scheme: "https")
+        var response: HTTPClient.Response!
         
-        url.host = "httpbin.org"
-        
-        url.path = "status/\(originalStatusCode.rawValue)"
-        
-        let request = SwiftFoundation.HTTP.Request(URL: url.URLString!)
-        
-        let client = SeeURL.HTTPClient()
-        
-        var response: HTTP.Response!
-        
-        do { response = try client.sendRequest(request) }
+        do {
+            response = try HTTPClient.sendRequest("GET", url: url)
+        }
         catch { XCTFail("\(error)"); return }
         
-        let statusCode = response.statusCode
+        let statusCode = response.0
         
-        XCTAssert(statusCode == originalStatusCode.rawValue, "\(statusCode) == \(originalStatusCode.rawValue)")
+        XCTAssert(statusCode == 200, "\(statusCode) == \(200)")
+    }
+    
+    func testResponseBody() {
+        
+        let url = "http://httpbin.org/robots.txt"
+        
+        var response: HTTPClient.Response!
+        
+        do {
+            response = try HTTPClient.sendRequest("GET", url: url)
+        }
+        catch { XCTFail("\(error)"); return }
+        
+        let statusCode = response.0
+        
+        XCTAssert(statusCode == 200, "\(statusCode) == \(200)")
+        
+        let responseString = String.fromCString(unsafeBitCast(response.2, [CChar].self))
+
+        print(response.1)
+        
+        XCTAssertEqual(response.1[0].0, "Server")
+        XCTAssertEqual(response.1[0].1, "nginx")
+        
+        XCTAssertTrue(responseString!.hasPrefix("User-agent"))
+        
     }
 }

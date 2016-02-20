@@ -15,27 +15,27 @@
 /// Loads HTTP requests
 public struct HTTPClient {
     
-    public init() { }
-    
-    public var verbose = false
-    
     public struct Options {
         let timeoutInterval: Int
+        let verbose: Bool
         init() {
             self.timeoutInterval = 30
+            self.verbose = false
         }
-        public init(timeoutInterval: Int) {
+        public init(timeoutInterval: Int, varbose: Bool) {
             self.timeoutInterval = timeoutInterval
+            self.verbose = varbose
         }
     }
     
     public typealias Header = (String, String)
+    public typealias Response = (Int, [Header], [UInt8])
     
-    public func sendRequest(method: String, url: String, headers: [Header] = [], body: [UInt8] = [], options: Options = Options()) throws -> (Int, [Header], [UInt8]) {
+    public static func sendRequest(method: String, url: String, headers: [Header] = [], body: [UInt8] = [], options: Options = Options()) throws -> Response {
         
         let curl = cURL()
         
-        try curl.setOption(CURLOPT_VERBOSE, self.verbose)
+        try curl.setOption(CURLOPT_VERBOSE, options.verbose)
         
         try curl.setOption(CURLOPT_URL, url)
         
@@ -98,11 +98,11 @@ public struct HTTPClient {
         
         let responseCode = try curl.getInfo(CURLINFO_RESPONSE_CODE) as Int
         
-        // TODO: implement header parsing
+        let resHeaders = ResponseHeaderParser(data: unsafeBitCast(responseHeaderStorage.data, [CChar].self)).parse()
         
         let resBody = responseBodyStorage.data
         
-        return (responseCode, [], resBody)
+        return (responseCode, resHeaders, resBody)
     }
     
     public enum Error: ErrorType {
@@ -115,9 +115,6 @@ public struct HTTPClient {
 // MARK: - Linux Support
 
 #if os(Linux)
-    public extension SwiftFoundation.HTTP {
-        public typealias Client = SeeURL.HTTPClient
-    }
     
     public let CURLOPT_WRITEDATA = CURLOPT_FILE
     public let CURLOPT_HEADERDATA = CURLOPT_WRITEHEADER
