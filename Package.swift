@@ -3,7 +3,7 @@ import PackageDescription
 let package = Package(
     name: "SeeURL",
     dependencies: [
-        .Package(url: "https://github.com/PureSwift/CcURL.git", majorVersion: 1),
+        .Package(url: "https://github.com/novi/CcURL.git", majorVersion: 1),
         .Package(url: "git@bitbucket.org:shiroyagi/swift-curl.git", majorVersion: 0)
     ],
     targets: [
