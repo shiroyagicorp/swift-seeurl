@@ -20,18 +20,7 @@ struct ResponseHeaderParser {
 
 extension String {
     func splitCRorLF() -> [String] {
-        var lines: [ [Character] ] = []
-        var cur: [Character] = []
-        for c in self.characters {
-            if c == "\r" || c == "\n" || c == "\r\n" {
-                lines.append(cur)
-                cur = []
-            } else {
-                cur.append(c)
-            }
-        }
-        lines.append(cur)
-        return lines.filter({ $0.count > 0}).map({ String($0) })
+        return self.characters.split { $0 == "\r" || $0 == "\n" || $0 == "\r\n" }.filter({ $0.count > 0}).map(String.init)
     }
     func splitByFirstColon() -> [String] {
         var modeIsName: Bool = true
@@ -45,12 +34,13 @@ extension String {
             if modeIsName {
                 name.append(c)
             } else {
-                value.append(c)
+                // trim left " " of value
+                if value.count == 0 && c == " " {
+                    // skip
+                } else {
+                    value.append(c)
+                }
             }
-        }
-        // TODO: trim left
-        if value.first == " " {
-            value.removeFirst()
         }
         if name.count > 0 && value.count > 0 {
             return [String(name), String(value)]
