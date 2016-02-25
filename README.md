@@ -20,3 +20,11 @@ First install SwiftFoundation [dependencies](https://github.com/PureSwift/SwiftF
 sudo apt-get install libcurl4-openssl-dev
 sudo cp cURLSwift.h /usr/include/curl
 ```
+
+## Building libcurl for OS X
+```
+$ cd curl-
+$ ./configure --prefix=<<PREFIX>> --with-ssl=/usr/local/opt/openssl --with-ca-bundle=/usr/local/etc/openssl/cert.pem
+$ make
+$ make install
+```
