@@ -24,6 +24,22 @@ final class HTTPClientTests: XCTestCase {
 
     func testStatusCode() {
         
+        let url = "http://httpbin.org/status/200"
+        
+        var response: HTTPClient.Response!
+        
+        do {
+            response = try HTTPClient.sendRequest("GET", url: url)
+        }
+        catch { XCTFail("\(error)"); return }
+        
+        let statusCode = response.0
+        
+        XCTAssert(statusCode == 200, "\(statusCode) == \(200)")
+    }
+    
+    func testSSLStatusCode() {
+        
         let url = "https://httpbin.org/status/200"
         
         var response: HTTPClient.Response!

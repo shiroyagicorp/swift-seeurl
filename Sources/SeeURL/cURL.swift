@@ -82,7 +82,7 @@ public final class cURL {
         
         let code = curl_easy_perform(internalHandler)
         
-        guard code.rawValue == CURLE_OK.rawValue else { throw Error(rawValue: code.rawValue)! }
+        guard code.rawValue == CURLE_OK.rawValue  else { throw Error(rawValue: code.rawValue) ?? Error.Undefined }
     }
     
     // MARK: - Set Option
@@ -91,35 +91,35 @@ public final class cURL {
         
         let code = curl_easy_setopt_string(internalHandler, option, value)
         
-        guard code.rawValue == CURLE_OK.rawValue else { throw cURL.Error(rawValue: code.rawValue)! }
+        guard code.rawValue == CURLE_OK.rawValue else { throw cURL.Error(rawValue: code.rawValue) ?? Error.Undefined }
     }
     
     public func setOption(option: Option, _ value: [UInt8]) throws {
         
         let code = curl_easy_setopt_string(internalHandler, option, unsafeBitCast(value, [Int8].self))
         
-        guard code.rawValue == CURLE_OK.rawValue else { throw cURL.Error(rawValue: code.rawValue)! }
+        guard code.rawValue == CURLE_OK.rawValue else { throw cURL.Error(rawValue: code.rawValue) ?? Error.Undefined }
     }
     
     public func setOption(option: Option, _ value: curl_read_callback) throws {
         
         let code = curl_easy_setopt_func(internalHandler, option, value)
         
-        guard code.rawValue == CURLE_OK.rawValue else { throw cURL.Error(rawValue: code.rawValue)! }
+        guard code.rawValue == CURLE_OK.rawValue else { throw cURL.Error(rawValue: code.rawValue) ?? Error.Undefined }
     }
     
     public func setOption(option: Option, _ value: AnyObject) throws {
         
         let code = curl_easy_setopt_pointer(internalHandler, option, unsafeBitCast(value, UnsafeMutablePointer<Void>.self))
         
-        guard code.rawValue == CURLE_OK.rawValue else { throw cURL.Error(rawValue: code.rawValue)! }
+        guard code.rawValue == CURLE_OK.rawValue else { throw cURL.Error(rawValue: code.rawValue) ?? Error.Undefined }
     }
     
     public func setOption(option: Option, inout _ value: [Int8]) throws {
         
         let code = curl_easy_setopt_pointer(internalHandler, option, &value)
         
-        guard code.rawValue == CURLE_OK.rawValue else { throw cURL.Error(rawValue: code.rawValue)! }
+        guard code.rawValue == CURLE_OK.rawValue else { throw cURL.Error(rawValue: code.rawValue) ?? Error.Undefined }
     }
     
     /// Set ```cURL.Long``` value for ```CURLoption```.
@@ -127,7 +127,7 @@ public final class cURL {
         
         let code = curl_easy_setopt_long(internalHandler, option, value)
         
-        guard code.rawValue == CURLE_OK.rawValue else { throw cURL.Error(rawValue: code.rawValue)! }
+        guard code.rawValue == CURLE_OK.rawValue else { throw cURL.Error(rawValue: code.rawValue) ?? Error.Undefined }
     }
     
     /// Set boolean value for ```CURLoption```.
@@ -135,7 +135,7 @@ public final class cURL {
         
         let code = curl_easy_setopt_bool(internalHandler, option, value)
         
-        guard code.rawValue == CURLE_OK.rawValue else { throw cURL.Error(rawValue: code.rawValue)! }
+        guard code.rawValue == CURLE_OK.rawValue else { throw cURL.Error(rawValue: code.rawValue) ?? Error.Undefined }
     }
     
     /// Set string list value for ```CURLoption```.
@@ -151,7 +151,7 @@ public final class cURL {
         
         let code = curl_easy_setopt_slist(internalHandler, option, pointer)
         
-        guard code.rawValue == CURLE_OK.rawValue else { throw cURL.Error(rawValue: code.rawValue)! }
+        guard code.rawValue == CURLE_OK.rawValue else { throw cURL.Error(rawValue: code.rawValue) ?? Error.Undefined }
         
         internalOptionStringLists[option.rawValue] = pointer
     }
@@ -165,9 +165,9 @@ public final class cURL {
         
         let code = curl_easy_getinfo_string(internalHandler, info, &stringBytesPointer)
         
-        guard code.rawValue == CURLE_OK.rawValue else { throw cURL.Error(rawValue: code.rawValue)! }
+        guard code.rawValue == CURLE_OK.rawValue else { throw cURL.Error(rawValue: code.rawValue) ?? Error.Undefined }
         
-        return String.fromCString(stringBytesPointer)!
+        return String.fromCString(stringBytesPointer) ?? ""
     }
     
     /// Get ```Long``` value for ```CURLINFO```.
@@ -177,7 +177,7 @@ public final class cURL {
         
         let code = curl_easy_getinfo_long(internalHandler, info, &value)
         
-        guard code.rawValue == CURLE_OK.rawValue else { throw cURL.Error(rawValue: code.rawValue)! }
+        guard code.rawValue == CURLE_OK.rawValue else { throw cURL.Error(rawValue: code.rawValue) ?? Error.Undefined }
         
         return value
     }
@@ -189,7 +189,7 @@ public final class cURL {
         
         let code = curl_easy_getinfo_double(internalHandler, info, &value)
         
-        guard code.rawValue == CURLE_OK.rawValue else { throw cURL.Error(rawValue: code.rawValue)! }
+        guard code.rawValue == CURLE_OK.rawValue else { throw cURL.Error(rawValue: code.rawValue) ?? Error.Undefined }
         
         return value
     }

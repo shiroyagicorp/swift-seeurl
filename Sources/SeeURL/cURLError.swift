@@ -16,6 +16,8 @@ public extension cURL {
     
     public enum Error: UInt32, ErrorType, CustomStringConvertible {
         
+        case Undefined = 0x999999
+        
         case UnsupportedProtocol        = 1
         case FailedInitialization
         case BadURLFormat
