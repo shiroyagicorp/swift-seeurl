@@ -24,7 +24,7 @@ sudo cp cURLSwift.h /usr/include/curl
 ## Building libcurl for OS X
 ```
 $ cd curl-
-$ ./configure --prefix=<<PREFIX>> --with-ssl=/usr/local/opt/openssl --with-ca-bundle=/usr/local/etc/openssl/cert.pem
+$ ./configure --prefix=/usr/local/opt/curl --with-ssl=/usr/local/opt/openssl --with-ca-bundle=/usr/local/etc/openssl/cert.pem
 $ make
 $ make install
 ```
