@@ -14,12 +14,15 @@
 
 import XCTest
 import SeeURL
+import Foundation
 
 
 final class HTTPClientTests: XCTestCase {
     
-    lazy var allTests : [(String, () -> Void)] = [
-            ("testStatusCode", self.testStatusCode)
+    lazy var allTests : [(String, () throws -> Void)] = [
+            ("testStatusCode", self.testStatusCode),
+            ("testSSLStatusCode", self.testSSLStatusCode),
+            ("testResponseBody", self.testResponseBody)
         ]
 
     func testStatusCode() {

@@ -8,6 +8,9 @@
 
 #if os(OSX) || os(iOS)
     import cURL
+    
+    
+    
 #elseif os(Linux)
     import CcURL
 #endif
@@ -17,7 +20,7 @@ import SeeURL
 
 final class cURLTests: XCTestCase {
     
-    lazy var allTests : [(String, () -> Void)] = [
+    lazy var allTests : [(String, () throws -> Void)] = [
         ("testGetStatusCode", self.testGetStatusCode),
         ("testPostField", self.testPostField),
         ("testReadFunction", self.testReadFunction),

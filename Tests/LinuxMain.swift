@@ -10,6 +10,7 @@ import XCTest
 
 #if os(Linux)
     import Glibc
+    @testable import SeeURLtest
     
     XCTMain([cURLTests(), HTTPClientTests()])
 #endif
