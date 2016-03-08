@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		522751E71C788C7900DCA616 /* cURLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522751CA1C78447D00DCA616 /* cURLTests.swift */; };
-		522751E81C788E0C00DCA616 /* HTTPClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522751CB1C78447D00DCA616 /* HTTPClientTests.swift */; };
 		522751EA1C7890B300DCA616 /* ResponseParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522751E91C7890B300DCA616 /* ResponseParser.swift */; };
 		52442F401C88A48800D42488 /* libcurl.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 52442F3F1C88A48800D42488 /* libcurl.tbd */; };
+		525FA9BE1C8EE6CD00602E17 /* cURLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525FA9BB1C8EE6CD00602E17 /* cURLTests.swift */; };
+		525FA9BF1C8EE6CD00602E17 /* HTTPClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525FA9BC1C8EE6CD00602E17 /* HTTPClientTests.swift */; };
 		6E2F72091C15255100E81D56 /* SeeURL.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E2F72081C15255100E81D56 /* SeeURL.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6E2F72101C15255100E81D56 /* SeeURL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E2F72051C15255100E81D56 /* SeeURL.framework */; };
 		6E92A4471C15470A007BC4E9 /* cURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E92A4411C15470A007BC4E9 /* cURL.swift */; };
@@ -45,11 +45,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		522751CA1C78447D00DCA616 /* cURLTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cURLTests.swift; sourceTree = "<group>"; };
-		522751CB1C78447D00DCA616 /* HTTPClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientTests.swift; sourceTree = "<group>"; };
-		522751CC1C78447D00DCA616 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		522751E91C7890B300DCA616 /* ResponseParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseParser.swift; sourceTree = "<group>"; };
 		52442F3F1C88A48800D42488 /* libcurl.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libcurl.tbd; path = usr/lib/libcurl.tbd; sourceTree = SDKROOT; };
+		525FA9B91C8EE6CD00602E17 /* LinuxMain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinuxMain.swift; sourceTree = "<group>"; };
+		525FA9BB1C8EE6CD00602E17 /* cURLTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = cURLTests.swift; sourceTree = "<group>"; };
+		525FA9BC1C8EE6CD00602E17 /* HTTPClientTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPClientTests.swift; sourceTree = "<group>"; };
 		6E18ED7E1C56C346002896B6 /* cURLSwift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cURLSwift.h; path = ../cURLSwift.h; sourceTree = "<group>"; };
 		6E2F72051C15255100E81D56 /* SeeURL.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SeeURL.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E2F72081C15255100E81D56 /* SeeURL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeeURL.h; sourceTree = "<group>"; };
@@ -84,15 +84,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		522751C91C78447D00DCA616 /* UnitTests */ = {
+		525FA9B81C8EE6CD00602E17 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				522751CA1C78447D00DCA616 /* cURLTests.swift */,
-				522751CB1C78447D00DCA616 /* HTTPClientTests.swift */,
-				522751CC1C78447D00DCA616 /* main.swift */,
+				525FA9B91C8EE6CD00602E17 /* LinuxMain.swift */,
+				525FA9BA1C8EE6CD00602E17 /* SeeURL */,
 			);
-			name = UnitTests;
-			path = ../UnitTests;
+			name = Tests;
+			path = ../Tests;
+			sourceTree = "<group>";
+		};
+		525FA9BA1C8EE6CD00602E17 /* SeeURL */ = {
+			isa = PBXGroup;
+			children = (
+				525FA9BB1C8EE6CD00602E17 /* cURLTests.swift */,
+				525FA9BC1C8EE6CD00602E17 /* HTTPClientTests.swift */,
+			);
+			path = SeeURL;
 			sourceTree = "<group>";
 		};
 		6E18ED621C5681F9002896B6 /* SeeURL */ = {
@@ -123,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				52442F3F1C88A48800D42488 /* libcurl.tbd */,
+				525FA9B81C8EE6CD00602E17 /* Tests */,
 				6E18ED7D1C56C303002896B6 /* Swift Compatibility Header */,
 				6E92A4401C1546FB007BC4E9 /* Source */,
 				6E2F72071C15255100E81D56 /* SeeURL */,
@@ -160,7 +169,6 @@
 		6E92A4401C1546FB007BC4E9 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				522751C91C78447D00DCA616 /* UnitTests */,
 				6E18ED621C5681F9002896B6 /* SeeURL */,
 			);
 			name = Source;
@@ -290,8 +298,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				522751E81C788E0C00DCA616 /* HTTPClientTests.swift in Sources */,
-				522751E71C788C7900DCA616 /* cURLTests.swift in Sources */,
+				525FA9BE1C8EE6CD00602E17 /* cURLTests.swift in Sources */,
+				525FA9BF1C8EE6CD00602E17 /* HTTPClientTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
