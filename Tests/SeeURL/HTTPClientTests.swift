@@ -59,7 +59,7 @@ final class HTTPClientTests: XCTestCase {
     
     func testResponseBody() {
         
-        let url = "http://httpbin.org/robots.txt"
+        let url = "http://httpbin.org/user-agent"
         
         var response: HTTPClient.Response!
         
@@ -79,7 +79,9 @@ final class HTTPClientTests: XCTestCase {
         XCTAssertEqual(response.1[0].0, "Server")
         XCTAssertEqual(response.1[0].1, "nginx")
         
-        XCTAssertTrue(responseString!.hasPrefix("User-agent"))
+        XCTAssertTrue(responseString!.containsString("user-agent"))
+        
+        // TODO: implement user agent
         
     }
 }
