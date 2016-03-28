@@ -50,7 +50,7 @@ public struct HTTPClient {
         }
         
         // set HTTP method
-        switch method.uppercaseString {
+        switch method.uppercased() {
             
         case "HEAD":
             try curl.setOption(CURLOPT_NOBODY, true)
@@ -63,7 +63,7 @@ public struct HTTPClient {
             
         default:
             
-            try curl.setOption(CURLOPT_CUSTOMREQUEST, method.uppercaseString)
+            try curl.setOption(CURLOPT_CUSTOMREQUEST, method.uppercased())
         }
         
         // set headers
@@ -98,14 +98,14 @@ public struct HTTPClient {
         
         let responseCode = try curl.getInfo(CURLINFO_RESPONSE_CODE) as Int
         
-        let resHeaders = ResponseHeaderParser(data: unsafeBitCast(responseHeaderStorage.data, [CChar].self)).parse()
+        let resHeaders = ResponseHeaderParser(data: unsafeBitCast(responseHeaderStorage.data, to: [CChar].self)).parse()
         
         let resBody = responseBodyStorage.data
         
         return (responseCode, resHeaders, resBody)
     }
     
-    public enum Error: ErrorType {
+    public enum Error: ErrorProtocol {
         
         /// The provided request was malformed.
         case BadRequest

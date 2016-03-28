@@ -33,7 +33,7 @@ public extension cURL {
 
 public func curlReadFunction(pointer: UnsafeMutablePointer<Int8>, size: Int, nmemb: Int, readData: UnsafeMutablePointer<Void>) -> Int {
     
-    let storage = unsafeBitCast(readData, cURL.ReadFunctionStorage.self)
+    let storage = unsafeBitCast(readData, to: cURL.ReadFunctionStorage.self)
     
     let data = storage.data
     
@@ -47,7 +47,7 @@ public func curlReadFunction(pointer: UnsafeMutablePointer<Int8>, size: Int, nme
     
     let char = CChar(byte)
     
-    pointer.memory = char
+    pointer.pointee = char
     
     storage.currentIndex += 1
     

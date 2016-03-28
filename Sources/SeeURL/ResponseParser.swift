@@ -9,7 +9,7 @@
 struct ResponseHeaderParser {
     let headerString: String
     init(data: [CChar]) {
-        headerString = String.fromCString(data) ?? ""
+        headerString = String(validatingUTF8: data) ?? ""
     }
     func parse() -> [HTTPClient.Header] {
         let lines = headerString.splitCRorLF()

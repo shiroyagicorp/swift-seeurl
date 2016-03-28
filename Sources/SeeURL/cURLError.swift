@@ -14,7 +14,7 @@
 
 public extension cURL {
     
-    public enum Error: UInt32, ErrorType, CustomStringConvertible {
+    public enum Error: UInt32, ErrorProtocol, CustomStringConvertible {
         
         case Undefined = 0x999999
         
@@ -39,7 +39,7 @@ public extension cURL {
         
         public var description: String {
             
-            let errorDescription = String.fromCString(curl_easy_strerror(CURLcode(rawValue: self.rawValue)))
+            let errorDescription = String(validatingUTF8: curl_easy_strerror(CURLcode(rawValue: self.rawValue)))
             
             return errorDescription ?? "cURL.Error(\(self.rawValue))"
         }
