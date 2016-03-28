@@ -16,14 +16,18 @@ import XCTest
 import SeeURL
 import Foundation
 
+extension HTTPClientTests {
+    static var allTests : [(String, HTTPClientTests -> () throws -> Void)] {
+        return [
+            ("testStatusCode", testStatusCode),
+            ("testSSLStatusCode", testSSLStatusCode),
+            ("testResponseBody", testResponseBody)
+        ]
+    }
+}
+
 
 final class HTTPClientTests: XCTestCase {
-    
-    lazy var allTests : [(String, () throws -> Void)] = [
-            ("testStatusCode", self.testStatusCode),
-            ("testSSLStatusCode", self.testSSLStatusCode),
-            ("testResponseBody", self.testResponseBody)
-        ]
 
     func testStatusCode() {
         
@@ -85,3 +89,12 @@ final class HTTPClientTests: XCTestCase {
         
     }
 }
+
+#if os(OSX)
+#else
+    extension String {
+        func contains(str: String) -> Bool {
+            return containsString(str)
+        }
+    }
+#endif

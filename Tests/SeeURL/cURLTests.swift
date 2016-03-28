@@ -8,9 +8,6 @@
 
 #if os(OSX) || os(iOS)
     import cURL
-    
-    
-    
 #elseif os(Linux)
     import CcURL
 #endif
@@ -18,16 +15,21 @@
 import XCTest
 import SeeURL
 
+
+extension cURLTests {
+    static var allTests : [(String, cURLTests -> () throws -> Void)] {
+        return [
+                   ("testGetStatusCode", testGetStatusCode),
+                   ("testPostField", testPostField),
+                   ("testReadFunction", testReadFunction),
+                   ("testWriteFunction", testWriteFunction),
+                   ("testHeaderWriteFunction", testHeaderWriteFunction),
+                   ("testSetHeaderOption", testSetHeaderOption),
+        ]
+    }
+}
+
 final class cURLTests: XCTestCase {
-    
-    lazy var allTests : [(String, () throws -> Void)] = [
-        ("testGetStatusCode", self.testGetStatusCode),
-        ("testPostField", self.testPostField),
-        ("testReadFunction", self.testReadFunction),
-        ("testWriteFunction", self.testWriteFunction),
-        ("testHeaderWriteFunction", self.testHeaderWriteFunction),
-        ("testSetHeaderOption", self.testSetHeaderOption),
-    ]
     
     // MARK: - Live Tests
     
@@ -144,7 +146,7 @@ final class cURLTests: XCTestCase {
             
         let foundationData = NSData(bytes: bytes, length: bytes.count)
         
-        try! XCTAssert(foundationData == NSData(contentsOf: NSURL(string: url)!))
+        try XCTAssert(foundationData == NSData(contentsOf: NSURL(string: url)!))
         
         #endif
         
@@ -220,7 +222,7 @@ final class cURLTests: XCTestCase {
             else { XCTFail("Invalid JSON response: \(String.fromCString(storage.data))"); return }
         
         XCTAssert(jsonHeaderValue == headerValue)
- */
+         */
         
         // invoke deinit
         curl = nil
