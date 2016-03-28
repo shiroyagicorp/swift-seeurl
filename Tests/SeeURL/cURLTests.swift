@@ -138,13 +138,13 @@ final class cURLTests: XCTestCase {
         
         XCTAssert(responseCode == 200, "\(responseCode) == 200")
         
-        let bytes = unsafeBitCast(storage.data, [UInt8].self)
+        let bytes = unsafeBitCast(storage.data, to: [UInt8].self)
         
         #if os(OSX) || os(iOS)
             
         let foundationData = NSData(bytes: bytes, length: bytes.count)
         
-        XCTAssert(foundationData == NSData(contentsOfURL: NSURL(string: url)!))
+        try! XCTAssert(foundationData == NSData(contentsOf: NSURL(string: url)!))
         
         #endif
         
@@ -175,7 +175,7 @@ final class cURLTests: XCTestCase {
         
         XCTAssert(responseCode == 200, "\(responseCode) == 200")
         
-        print("Header:\n\(String.fromCString(unsafeBitCast(storage.data, [CChar].self))!)")
+        print("Header:\n\(String(validatingUTF8: unsafeBitCast(storage.data, to: [CChar].self))!)")
     }
     
     func testSetHeaderOption() {
@@ -209,7 +209,7 @@ final class cURLTests: XCTestCase {
         
         XCTAssert(responseCode == 200, "\(responseCode) == 200")
         
-        let responseData = unsafeBitCast(storage.data, [CChar].self)
+        let responseData = unsafeBitCast(storage.data, to: [CChar].self)
         
         print(String(responseData))
         /*guard let jsonString = String.fromCString(storage.data),

@@ -44,9 +44,9 @@ public final class cURL {
             
             if pointer != nil {
                 
-                pointer.memory.free()
+                pointer.pointee.free()
                 
-                pointer.destroy()
+                pointer.deinitialize()
             }
         }
         
@@ -96,7 +96,7 @@ public final class cURL {
     
     public func setOption(option: Option, _ value: [UInt8]) throws {
         
-        let code = curl_easy_setopt_string(internalHandler, option, unsafeBitCast(value, [Int8].self))
+        let code = curl_easy_setopt_string(internalHandler, option, unsafeBitCast(value, to: [Int8].self))
         
         guard code.rawValue == CURLE_OK.rawValue else { throw cURL.Error(rawValue: code.rawValue) ?? Error.Undefined }
     }
@@ -110,12 +110,12 @@ public final class cURL {
     
     public func setOption(option: Option, _ value: AnyObject) throws {
         
-        let code = curl_easy_setopt_pointer(internalHandler, option, unsafeBitCast(value, UnsafeMutablePointer<Void>.self))
+        let code = curl_easy_setopt_pointer(internalHandler, option, unsafeBitCast(value, to: UnsafeMutablePointer<Void>.self))
         
         guard code.rawValue == CURLE_OK.rawValue else { throw cURL.Error(rawValue: code.rawValue) ?? Error.Undefined }
     }
     
-    public func setOption(option: Option, inout _ value: [Int8]) throws {
+    public func setOption(option: Option, _ value: inout [Int8]) throws {
         
         let code = curl_easy_setopt_pointer(internalHandler, option, &value)
         
@@ -142,7 +142,7 @@ public final class cURL {
     public func setOption(option: Option, _ value: [String]) throws {
         
         // will dealloc in deinit
-        var pointer = UnsafeMutablePointer<StringList>()
+        var pointer: UnsafeMutablePointer<StringList> = nil
         
         for string in value {
             
@@ -161,13 +161,13 @@ public final class cURL {
     /// Get string value for ```CURLINFO```.
     public func getInfo(info: Info) throws -> String {
         
-        var stringBytesPointer = UnsafePointer<CChar>()
+        var stringBytesPointer: UnsafePointer<CChar> = nil
         
         let code = curl_easy_getinfo_string(internalHandler, info, &stringBytesPointer)
         
         guard code.rawValue == CURLE_OK.rawValue else { throw cURL.Error(rawValue: code.rawValue) ?? Error.Undefined }
         
-        return String.fromCString(stringBytesPointer) ?? ""
+        return String(validatingUTF8: stringBytesPointer) ?? ""
     }
     
     /// Get ```Long``` value for ```CURLINFO```.
