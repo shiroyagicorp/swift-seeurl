@@ -36,7 +36,7 @@ final class HTTPClientTests: XCTestCase {
         var response: HTTPClient.Response!
         
         do {
-            response = try HTTPClient.sendRequest("GET", url: url)
+            response = try HTTPClient.sendRequest(method: "GET", url: url)
         }
         catch { XCTFail("\(error)"); return }
         
@@ -52,7 +52,7 @@ final class HTTPClientTests: XCTestCase {
         var response: HTTPClient.Response!
         
         do {
-            response = try HTTPClient.sendRequest("GET", url: url)
+            response = try HTTPClient.sendRequest(method: "GET", url: url)
         }
         catch { XCTFail("\(error)"); return }
         
@@ -68,7 +68,7 @@ final class HTTPClientTests: XCTestCase {
         var response: HTTPClient.Response!
         
         do {
-            response = try HTTPClient.sendRequest("GET", url: url)
+            response = try HTTPClient.sendRequest(method: "GET", url: url)
         }
         catch { XCTFail("\(error)"); return }
         
