@@ -20,7 +20,7 @@ public extension cURL.StringList {
         
         for string in strings {
             
-            self.append(string)
+            self.append(string: string)
         }
     }
     

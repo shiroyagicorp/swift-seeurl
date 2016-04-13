@@ -31,7 +31,9 @@ public extension cURL {
     }
 }
 
-public func curlReadFunction(pointer: UnsafeMutablePointer<Int8>, size: Int, nmemb: Int, readData: UnsafeMutablePointer<Void>) -> Int {
+public func curlReadFunction(pointer: UnsafeMutablePointer<Int8>?, size: Int, nmemb: Int, readData: UnsafeMutablePointer<Void>?) -> Int {
+    
+    guard let pointer = pointer, let readData = readData else { return 0 }
     
     let storage = unsafeBitCast(readData, to: cURL.ReadFunctionStorage.self)
     
