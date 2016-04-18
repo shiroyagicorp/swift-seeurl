@@ -18,13 +18,16 @@ public struct HTTPClient {
     public struct Options {
         let timeoutInterval: Int
         let verbose: Bool
+        let followRedirect: Bool
         init() {
             self.timeoutInterval = 30
             self.verbose = false
+            self.followRedirect = true
         }
-        public init(timeoutInterval: Int, varbose: Bool) {
+        public init(timeoutInterval: Int, varbose: Bool, followRedirect: Bool) {
             self.timeoutInterval = timeoutInterval
             self.verbose = varbose
+            self.followRedirect = followRedirect
         }
     }
     
@@ -40,6 +43,8 @@ public struct HTTPClient {
         try curl.set(option: CURLOPT_URL, url)
         
         try curl.set(option: CURLOPT_TIMEOUT, cURL.Long(options.timeoutInterval))
+        
+        try curl.set(option: CURLOPT_FOLLOWLOCATION, options.followRedirect)
         
         // append data
         if body.count > 0 {
