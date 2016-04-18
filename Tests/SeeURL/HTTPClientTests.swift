@@ -76,14 +76,14 @@ final class HTTPClientTests: XCTestCase {
         
         XCTAssert(statusCode == 200, "\(statusCode) == \(200)")
         
-        let responseString = String(validatingUTF8: unsafeBitCast(response.2, to: [CChar].self))
+        let responseString = String(cString: unsafeBitCast(response.2, to: [CChar].self))
 
         print(response.1)
         
         XCTAssertEqual(response.1[0].0, "Server")
         XCTAssertEqual(response.1[0].1, "nginx")
         
-        XCTAssertTrue(responseString!.contains("user-agent"))
+        XCTAssertTrue(responseString.contains("user-agent"))
         
         // TODO: implement user agent
         

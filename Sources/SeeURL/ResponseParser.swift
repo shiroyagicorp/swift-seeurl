@@ -9,9 +9,10 @@
 struct ResponseHeaderParser {
     let headerString: String
     init(data: [CChar]) {
-        headerString = String(validatingUTF8: data) ?? ""
+        headerString = String(cString: data) ?? ""
     }
     func parse() -> [HTTPClient.Header] {
+        //print("parsing header", headerString)
         let lines = headerString.splitCRorLF()
         return lines.map({ $0.splitByFirstColon() }).filter({ $0.count == 2})
             .map({ ($0[0], $0[1]) })
