@@ -46,6 +46,9 @@ public struct HTTPClient {
         
         try curl.set(option: CURLOPT_FOLLOWLOCATION, options.followRedirect)
         
+        
+        try curl.set(option: CURLOPT_USERAGENT, "curl/0.0.0")
+        
         // append data
         if body.count > 0 {
             
