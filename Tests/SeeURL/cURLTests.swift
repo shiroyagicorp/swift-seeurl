@@ -17,7 +17,7 @@ import SeeURL
 
 
 extension cURLTests {
-    static var allTests : [(String, cURLTests -> () throws -> Void)] {
+    static var allTests : [(String, (cURLTests) -> () throws -> Void)] {
         return [
                    ("testGetStatusCode", testGetStatusCode),
                    ("testPostField", testPostField),

@@ -17,7 +17,7 @@ import SeeURL
 import Foundation
 
 extension HTTPClientTests {
-    static var allTests : [(String, HTTPClientTests -> () throws -> Void)] {
+    static var allTests : [(String, (HTTPClientTests) -> () throws -> Void)] {
         return [
             ("testStatusCode", testStatusCode),
             ("testSSLStatusCode", testSSLStatusCode),
