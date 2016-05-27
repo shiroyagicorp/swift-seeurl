@@ -89,12 +89,3 @@ final class HTTPClientTests: XCTestCase {
         
     }
 }
-
-#if os(OSX)
-#else
-    extension String {
-        func contains(str: String) -> Bool {
-            return containsString(str)
-        }
-    }
-#endif
