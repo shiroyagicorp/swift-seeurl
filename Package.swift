@@ -4,7 +4,7 @@ let package = Package(
     name: "SeeURL",
     dependencies: [
         .Package(url: "https://github.com/novi/CcURL.git", majorVersion: 1),
-        .Package(url: "git@bitbucket.org:shiroyagi/swift-curl.git", majorVersion: 0)
+        .Package(url: "git@github.com:shiroyagicorp/swift-curl.git", majorVersion: 0)
     ],
     targets: [
         Target(
