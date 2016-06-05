@@ -8,9 +8,6 @@
 
 #if os(OSX) || os(iOS)
     import cURL
-    
-    
-    
 #elseif os(Linux)
     import CcURL
 #endif
@@ -18,16 +15,21 @@
 import XCTest
 import SeeURL
 
+
+extension cURLTests {
+    static var allTests : [(String, (cURLTests) -> () throws -> Void)] {
+        return [
+                   ("testGetStatusCode", testGetStatusCode),
+                   ("testPostField", testPostField),
+                   ("testReadFunction", testReadFunction),
+                   ("testWriteFunction", testWriteFunction),
+                   ("testHeaderWriteFunction", testHeaderWriteFunction),
+                   ("testSetHeaderOption", testSetHeaderOption),
+        ]
+    }
+}
+
 final class cURLTests: XCTestCase {
-    
-    lazy var allTests : [(String, () throws -> Void)] = [
-        ("testGetStatusCode", self.testGetStatusCode),
-        ("testPostField", self.testPostField),
-        ("testReadFunction", self.testReadFunction),
-        ("testWriteFunction", self.testWriteFunction),
-        ("testHeaderWriteFunction", self.testHeaderWriteFunction),
-        ("testSetHeaderOption", self.testSetHeaderOption),
-    ]
     
     // MARK: - Live Tests
     
@@ -37,16 +39,16 @@ final class cURLTests: XCTestCase {
         
         let testStatusCode = 200
         
-        try! curl.setOption(CURLOPT_VERBOSE, true)
+        try! curl.set(option: CURLOPT_VERBOSE, true)
         
-        try! curl.setOption(CURLOPT_URL, "http://httpbin.org/status/\(testStatusCode)")
+        try! curl.set(option: CURLOPT_URL, "http://httpbin.org/status/\(testStatusCode)")
         
-        try! curl.setOption(CURLOPT_TIMEOUT, 5)
+        try! curl.set(option: CURLOPT_TIMEOUT, 5)
         
         do { try curl.perform() }
         catch { XCTFail("Error executing cURL request: \(error)"); return }
         
-        let responseCode: cURL.Long = try! curl.getInfo(CURLINFO_RESPONSE_CODE)
+        let responseCode: cURL.Long = try! curl.get(info: CURLINFO_RESPONSE_CODE)
         
         XCTAssert(responseCode == testStatusCode, "\(responseCode) == \(testStatusCode)")
     }
@@ -57,28 +59,28 @@ final class cURLTests: XCTestCase {
         
         let url = "http://httpbin.org/post"
         
-        try! curl.setOption(CURLOPT_VERBOSE, true)
+        try! curl.set(option: CURLOPT_VERBOSE, true)
         
-        try! curl.setOption(CURLOPT_URL, url)
+        try! curl.set(option: CURLOPT_URL, url)
         
-        let effectiveURL = try! curl.getInfo(CURLINFO_EFFECTIVE_URL) as String
+        let effectiveURL = try! curl.get(info: CURLINFO_EFFECTIVE_URL) as String
         
         XCTAssert(url == effectiveURL)
         
-        try! curl.setOption(CURLOPT_TIMEOUT, 10)
+        try! curl.set(option: CURLOPT_TIMEOUT, 10)
         
-        try! curl.setOption(CURLOPT_POST, true)
+        try! curl.set(option: CURLOPT_POST, true)
         
         let data: [UInt8] = [0x54, 0x65, 0x73, 0x74] // "Test"
         
-        try! curl.setOption(CURLOPT_POSTFIELDS, data)
+        try! curl.set(option: CURLOPT_POSTFIELDS, data)
         
-        try! curl.setOption(CURLOPT_POSTFIELDSIZE, data.count)
+        try! curl.set(option: CURLOPT_POSTFIELDSIZE, data.count)
         
         do { try curl.perform() }
         catch { XCTFail("Error executing cURL request: \(error)"); return }
         
-        let responseCode = try! curl.getInfo(CURLINFO_RESPONSE_CODE) as Int
+        let responseCode = try! curl.get(info: CURLINFO_RESPONSE_CODE) as Int
         
         XCTAssert(responseCode == 200, "\(responseCode) == 200")
     }
@@ -87,28 +89,28 @@ final class cURLTests: XCTestCase {
         
         let curl = cURL()
         
-        try! curl.setOption(CURLOPT_VERBOSE, true)
+        try! curl.set(option: CURLOPT_VERBOSE, true)
         
-        try! curl.setOption(CURLOPT_URL, "http://httpbin.org/post")
+        try! curl.set(option: CURLOPT_URL, "http://httpbin.org/post")
         
-        try! curl.setOption(CURLOPT_TIMEOUT, 10)
+        try! curl.set(option: CURLOPT_TIMEOUT, 10)
         
-        try! curl.setOption(CURLOPT_POST, true)
+        try! curl.set(option: CURLOPT_POST, true)
         
         let data: [UInt8] = [0x54, 0x65, 0x73, 0x74] // "Test"
         
-        try! curl.setOption(CURLOPT_POSTFIELDSIZE, data.count)
+        try! curl.set(option: CURLOPT_POSTFIELDSIZE, data.count)
         
         let dataStorage = cURL.ReadFunctionStorage(data: data)
         
-        try! curl.setOption(CURLOPT_READDATA, dataStorage)
+        try! curl.set(option: CURLOPT_READDATA, dataStorage)
                 
-        try! curl.setOption(CURLOPT_READFUNCTION, curlReadFunction)
+        try! curl.set(option: CURLOPT_READFUNCTION, curlReadFunction)
         
         do { try curl.perform() }
         catch { XCTFail("Error executing cURL request: \(error)"); return }
         
-        let responseCode = (try! curl.getInfo(CURLINFO_RESPONSE_CODE) as cURL.Long) as Int
+        let responseCode = (try! curl.get(info: CURLINFO_RESPONSE_CODE) as cURL.Long) as Int
         
         XCTAssert(responseCode == 200, "\(responseCode) == 200")
     }
@@ -117,34 +119,34 @@ final class cURLTests: XCTestCase {
         
         let curl = cURL()
         
-        try! curl.setOption(CURLOPT_VERBOSE, true)
+        try! curl.set(option: CURLOPT_VERBOSE, true)
         
         let url = "https://httpbin.org/image/jpeg"
         
-        try! curl.setOption(CURLOPT_URL, url)
+        try! curl.set(option: CURLOPT_URL, url)
         
-        try! curl.setOption(CURLOPT_TIMEOUT, 60)
+        try! curl.set(option: CURLOPT_TIMEOUT, 60)
         
         let storage = cURL.WriteFunctionStorage()
         
-        try! curl.setOption(CURLOPT_WRITEDATA, storage)
+        try! curl.set(option: CURLOPT_WRITEDATA, storage)
         
-        try! curl.setOption(CURLOPT_WRITEFUNCTION, cURL.WriteFunction)
+        try! curl.set(option: CURLOPT_WRITEFUNCTION, cURL.WriteFunction)
         
         do { try curl.perform() }
         catch { XCTFail("Error executing cURL request: \(error)"); return }
         
-        let responseCode = try! curl.getInfo(CURLINFO_RESPONSE_CODE) as Int
+        let responseCode = try! curl.get(info: CURLINFO_RESPONSE_CODE) as Int
         
         XCTAssert(responseCode == 200, "\(responseCode) == 200")
         
-        let bytes = unsafeBitCast(storage.data, [UInt8].self)
+        let bytes = unsafeBitCast(storage.data, to: [UInt8].self)
         
         #if os(OSX) || os(iOS)
             
         let foundationData = NSData(bytes: bytes, length: bytes.count)
         
-        XCTAssert(foundationData == NSData(contentsOfURL: NSURL(string: url)!))
+        try XCTAssert(foundationData == NSData(contentsOf: NSURL(string: url)!))
         
         #endif
         
@@ -154,62 +156,62 @@ final class cURLTests: XCTestCase {
         
         let curl = cURL()
         
-        try! curl.setOption(CURLOPT_VERBOSE, true)
+        try! curl.set(option: CURLOPT_VERBOSE, true)
         
         let url = "http://httpbin.org"
         
-        try! curl.setOption(CURLOPT_URL, url)
+        try! curl.set(option: CURLOPT_URL, url)
         
-        try! curl.setOption(CURLOPT_TIMEOUT, 5)
+        try! curl.set(option: CURLOPT_TIMEOUT, 5)
         
         let storage = cURL.WriteFunctionStorage()
         
-        try! curl.setOption(CURLOPT_HEADERDATA, storage)
+        try! curl.set(option: CURLOPT_HEADERDATA, storage)
         
-        try! curl.setOption(CURLOPT_HEADERFUNCTION, cURL.WriteFunction)
+        try! curl.set(option: CURLOPT_HEADERFUNCTION, cURL.WriteFunction)
         
         do { try curl.perform() }
         catch { XCTFail("Error executing cURL request: \(error)"); return }
         
-        let responseCode = try! curl.getInfo(CURLINFO_RESPONSE_CODE) as Int
+        let responseCode = try! curl.get(info: CURLINFO_RESPONSE_CODE) as Int
         
         XCTAssert(responseCode == 200, "\(responseCode) == 200")
         
-        print("Header:\n\(String.fromCString(unsafeBitCast(storage.data, [CChar].self))!)")
+        print("Header:\n\(String(validatingUTF8: unsafeBitCast(storage.data, to: [CChar].self))!)")
     }
     
     func testSetHeaderOption() {
         
         var curl: cURL! = cURL()
         
-        try! curl.setOption(CURLOPT_VERBOSE, true)
+        try! curl.set(option: CURLOPT_VERBOSE, true)
         
-        try! curl.setOption(CURLOPT_TIMEOUT, 10)
+        try! curl.set(option: CURLOPT_TIMEOUT, 10)
         
         let url = "http://httpbin.org/headers"
         
-        try! curl.setOption(CURLOPT_URL, url)
+        try! curl.set(option: CURLOPT_URL, url)
         
         let header = "Header"
         
         let headerValue = "Value"
         
-        try! curl.setOption(CURLOPT_HTTPHEADER, [header + ": " + headerValue])
+        try! curl.set(option: CURLOPT_HTTPHEADER, [header + ": " + headerValue])
         
         let storage = cURL.WriteFunctionStorage()
         
-        try! curl.setOption(CURLOPT_WRITEDATA, storage)
+        try! curl.set(option: CURLOPT_WRITEDATA, storage)
         
-        try! curl.setOption(CURLOPT_WRITEFUNCTION, curlWriteFunction)
+        try! curl.set(option: CURLOPT_WRITEFUNCTION, curlWriteFunction)
         
         do { try curl.perform() }
         catch { XCTFail("Error executing cURL request: \(error)"); return }
         
-        let responseCode = try! curl.getInfo(CURLINFO_RESPONSE_CODE) as Int
+        let responseCode = try! curl.get(info: CURLINFO_RESPONSE_CODE) as Int
         
         XCTAssert(responseCode == 200, "\(responseCode) == 200")
         
-        let responseData = unsafeBitCast(storage.data, [CChar].self)
+        let responseData = unsafeBitCast(storage.data, to: [CChar].self)
         
         print(String(responseData))
         /*guard let jsonString = String.fromCString(storage.data),
@@ -220,7 +222,7 @@ final class cURLTests: XCTestCase {
             else { XCTFail("Invalid JSON response: \(String.fromCString(storage.data))"); return }
         
         XCTAssert(jsonHeaderValue == headerValue)
- */
+         */
         
         // invoke deinit
         curl = nil

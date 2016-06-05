@@ -20,11 +20,11 @@ public extension cURL.StringList {
         
         for string in strings {
             
-            self.append(string)
+            self.append(string: string)
         }
     }
     
-    var value: String? { return String.fromCString(data) }
+    var value: String? { return String(validatingUTF8: data) }
     
     mutating func append(string: String) { curl_slist_append(&self, string) }
     
