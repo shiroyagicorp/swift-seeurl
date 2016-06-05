@@ -18,13 +18,16 @@ public struct HTTPClient {
     public struct Options {
         let timeoutInterval: Int
         let verbose: Bool
+        let followRedirect: Bool
         init() {
             self.timeoutInterval = 30
             self.verbose = false
+            self.followRedirect = true
         }
-        public init(timeoutInterval: Int, varbose: Bool) {
+        public init(timeoutInterval: Int, varbose: Bool, followRedirect: Bool) {
             self.timeoutInterval = timeoutInterval
             self.verbose = varbose
+            self.followRedirect = followRedirect
         }
     }
     
@@ -35,35 +38,40 @@ public struct HTTPClient {
         
         let curl = cURL()
         
-        try curl.setOption(CURLOPT_VERBOSE, options.verbose)
+        try curl.set(option: CURLOPT_VERBOSE, options.verbose)
         
-        try curl.setOption(CURLOPT_URL, url)
+        try curl.set(option: CURLOPT_URL, url)
         
-        try curl.setOption(CURLOPT_TIMEOUT, cURL.Long(options.timeoutInterval))
+        try curl.set(option: CURLOPT_TIMEOUT, cURL.Long(options.timeoutInterval))
+        
+        try curl.set(option: CURLOPT_FOLLOWLOCATION, options.followRedirect)
+        
+        
+        try curl.set(option: CURLOPT_USERAGENT, "curl/0.0.0")
         
         // append data
         if body.count > 0 {
             
-            try curl.setOption(CURLOPT_POSTFIELDS, body)
+            try curl.set(option: CURLOPT_POSTFIELDS, body)
             
-            try curl.setOption(CURLOPT_POSTFIELDSIZE, body.count)
+            try curl.set(option: CURLOPT_POSTFIELDSIZE, body.count)
         }
         
         // set HTTP method
-        switch method.uppercaseString {
+        switch method.uppercased() {
             
         case "HEAD":
-            try curl.setOption(CURLOPT_NOBODY, true)
-            try curl.setOption(CURLOPT_CUSTOMREQUEST, "HEAD")
+            try curl.set(option:CURLOPT_NOBODY, true)
+            try curl.set(option:CURLOPT_CUSTOMREQUEST, "HEAD")
             
         case "POST":
-            try curl.setOption(CURLOPT_POST, true)
+            try curl.set(option:CURLOPT_POST, true)
             
-        case "GET": try curl.setOption(CURLOPT_HTTPGET, true)
+        case "GET": try curl.set(option:CURLOPT_HTTPGET, true)
             
         default:
             
-            try curl.setOption(CURLOPT_CUSTOMREQUEST, method.uppercaseString)
+            try curl.set(option:CURLOPT_CUSTOMREQUEST, method.uppercased())
         }
         
         // set headers
@@ -76,36 +84,36 @@ public struct HTTPClient {
                 curlHeaders.append(header.0 + ": " + header.1)
             }
             
-            try curl.setOption(CURLOPT_HTTPHEADER, curlHeaders)
+            try curl.set(option:CURLOPT_HTTPHEADER, curlHeaders)
         }
         
         // set response data callback
         
         let responseBodyStorage = cURL.WriteFunctionStorage()
         
-        try! curl.setOption(CURLOPT_WRITEDATA, responseBodyStorage)
+        try! curl.set(option:CURLOPT_WRITEDATA, responseBodyStorage)
         
-        try! curl.setOption(CURLOPT_WRITEFUNCTION, curlWriteFunction)
+        try! curl.set(option:CURLOPT_WRITEFUNCTION, curlWriteFunction)
         
         let responseHeaderStorage = cURL.WriteFunctionStorage()
         
-        try! curl.setOption(CURLOPT_HEADERDATA, responseHeaderStorage)
+        try! curl.set(option:CURLOPT_HEADERDATA, responseHeaderStorage)
         
-        try! curl.setOption(CURLOPT_HEADERFUNCTION, curlWriteFunction)
+        try! curl.set(option:CURLOPT_HEADERFUNCTION, curlWriteFunction)
         
         // connect to server
         try curl.perform()
         
-        let responseCode = try curl.getInfo(CURLINFO_RESPONSE_CODE) as Int
+        let responseCode = try curl.get(info: CURLINFO_RESPONSE_CODE) as Int
         
-        let resHeaders = ResponseHeaderParser(data: unsafeBitCast(responseHeaderStorage.data, [CChar].self)).parse()
+        let resHeaders = ResponseHeaderParser(data: unsafeBitCast(responseHeaderStorage.data, to: [CChar].self)).parse()
         
         let resBody = responseBodyStorage.data
         
         return (responseCode, resHeaders, resBody)
     }
     
-    public enum Error: ErrorType {
+    public enum Error: ErrorProtocol {
         
         /// The provided request was malformed.
         case BadRequest

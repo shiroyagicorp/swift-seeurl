@@ -16,14 +16,18 @@ import XCTest
 import SeeURL
 import Foundation
 
+extension HTTPClientTests {
+    static var allTests : [(String, (HTTPClientTests) -> () throws -> Void)] {
+        return [
+            ("testStatusCode", testStatusCode),
+            ("testSSLStatusCode", testSSLStatusCode),
+            ("testResponseBody", testResponseBody)
+        ]
+    }
+}
+
 
 final class HTTPClientTests: XCTestCase {
-    
-    lazy var allTests : [(String, () throws -> Void)] = [
-            ("testStatusCode", self.testStatusCode),
-            ("testSSLStatusCode", self.testSSLStatusCode),
-            ("testResponseBody", self.testResponseBody)
-        ]
 
     func testStatusCode() {
         
@@ -32,7 +36,7 @@ final class HTTPClientTests: XCTestCase {
         var response: HTTPClient.Response!
         
         do {
-            response = try HTTPClient.sendRequest("GET", url: url)
+            response = try HTTPClient.sendRequest(method: "GET", url: url)
         }
         catch { XCTFail("\(error)"); return }
         
@@ -48,7 +52,7 @@ final class HTTPClientTests: XCTestCase {
         var response: HTTPClient.Response!
         
         do {
-            response = try HTTPClient.sendRequest("GET", url: url)
+            response = try HTTPClient.sendRequest(method: "GET", url: url)
         }
         catch { XCTFail("\(error)"); return }
         
@@ -64,7 +68,7 @@ final class HTTPClientTests: XCTestCase {
         var response: HTTPClient.Response!
         
         do {
-            response = try HTTPClient.sendRequest("GET", url: url)
+            response = try HTTPClient.sendRequest(method: "GET", url: url)
         }
         catch { XCTFail("\(error)"); return }
         
@@ -72,14 +76,14 @@ final class HTTPClientTests: XCTestCase {
         
         XCTAssert(statusCode == 200, "\(statusCode) == \(200)")
         
-        let responseString = String.fromCString(unsafeBitCast(response.2, [CChar].self))
+        let responseString = String(cString: unsafeBitCast(response.2, to: [CChar].self))
 
         print(response.1)
         
         XCTAssertEqual(response.1[0].0, "Server")
         XCTAssertEqual(response.1[0].1, "nginx")
         
-        XCTAssertTrue(responseString!.containsString("user-agent"))
+        XCTAssertTrue(responseString.contains("user-agent"))
         
         // TODO: implement user agent
         

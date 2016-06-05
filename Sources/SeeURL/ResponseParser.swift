@@ -9,9 +9,10 @@
 struct ResponseHeaderParser {
     let headerString: String
     init(data: [CChar]) {
-        headerString = String.fromCString(data) ?? ""
+        headerString = String(cString: data) ?? ""
     }
     func parse() -> [HTTPClient.Header] {
+        //print("parsing header", headerString)
         let lines = headerString.splitCRorLF()
         return lines.map({ $0.splitByFirstColon() }).filter({ $0.count == 2})
             .map({ ($0[0], $0[1]) })
@@ -20,7 +21,8 @@ struct ResponseHeaderParser {
 
 extension String {
     func splitCRorLF() -> [String] {
-        return self.characters.split { $0 == "\r" || $0 == "\n" || $0 == "\r\n" }.filter({ $0.count > 0}).map(String.init)
+        let part = self.characters.split(isSeparator: { $0 == Character("\r") || $0 == Character("\n") || $0 == Character("\r\n") })
+        return part.filter({ $0.count > 0 }).map(String.init)
     }
     func splitByFirstColon() -> [String] {
         var modeIsName: Bool = true

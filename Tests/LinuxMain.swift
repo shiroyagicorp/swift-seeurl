@@ -7,10 +7,11 @@
 //
 
 import XCTest
+import Glibc
 
-#if os(Linux)
-    import Glibc
-    @testable import SeeURLtest
-    
-    XCTMain([cURLTests(), HTTPClientTests()])
-#endif
+@testable import SeeURLTestSuite
+
+XCTMain([
+            testCase(cURLTests.allTests),
+            testCase(HTTPClientTests.allTests)
+    ])
