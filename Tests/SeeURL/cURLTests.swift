@@ -15,6 +15,16 @@
 import XCTest
 import SeeURL
 
+#if SWIFT3_DEV
+    public typealias Date = NSDate
+    public typealias Data = NSData
+    public typealias URL = NSURL
+    extension Data {
+        convenience init(bytes: UnsafePointer<UInt8>, count: Int) {
+            self.init(bytes: bytes, length: count)
+        }
+    }
+#endif
 
 extension cURLTests {
     static var allTests : [(String, (cURLTests) -> () throws -> Void)] {
