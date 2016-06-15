@@ -14,6 +14,7 @@
 
 import XCTest
 import SeeURL
+import Foundation
 
 #if SWIFT3_DEV
     public typealias Date = NSDate
