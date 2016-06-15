@@ -144,9 +144,9 @@ final class cURLTests: XCTestCase {
         
         #if os(OSX) || os(iOS)
             
-        let foundationData = NSData(bytes: bytes, length: bytes.count)
+        let foundationData = Data(bytes: bytes, count: bytes.count)
         
-        try XCTAssert(foundationData == NSData(contentsOf: NSURL(string: url)!))
+        try XCTAssert(foundationData == Data(contentsOf: URL(string: url)!))
         
         #endif
         
