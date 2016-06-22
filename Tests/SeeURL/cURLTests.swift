@@ -16,7 +16,7 @@ import XCTest
 import SeeURL
 import Foundation
 
-#if SWIFT3_DEV
+#if SWIFT3_DEV && os(Linux)
     public typealias Date = NSDate
     public typealias Data = NSData
     public typealias URL = NSURL
