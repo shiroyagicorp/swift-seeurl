@@ -29,6 +29,16 @@ extension cURLTests {
     }
 }
 
+#if !os(OSX)
+    public func allTests() -> [XCTestCaseEntry] {
+        return [
+            testCase(cURLTests.allTests),
+            testCase(HTTPClientTests.allTests)
+        ]
+    }
+#endif
+
+
 final class cURLTests: XCTestCase {
     
     // MARK: - Live Tests
@@ -146,7 +156,7 @@ final class cURLTests: XCTestCase {
             
         let foundationData = NSData(bytes: bytes, length: bytes.count)
         
-        try XCTAssert(foundationData == NSData(contentsOf: NSURL(string: url)!))
+        try XCTAssert(foundationData == NSData(contentsOf: URL(string: url)!))
         
         #endif
         

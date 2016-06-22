@@ -46,6 +46,7 @@
 
 /* Begin PBXFileReference section */
 		522751E91C7890B300DCA616 /* ResponseParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseParser.swift; sourceTree = "<group>"; };
+		523C19EA1D1A137E00FA1630 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Package.swift; path = ../Package.swift; sourceTree = "<group>"; };
 		52442F3F1C88A48800D42488 /* libcurl.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libcurl.tbd; path = usr/lib/libcurl.tbd; sourceTree = SDKROOT; };
 		525FA9B91C8EE6CD00602E17 /* LinuxMain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinuxMain.swift; sourceTree = "<group>"; };
 		525FA9BB1C8EE6CD00602E17 /* cURLTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = cURLTests.swift; sourceTree = "<group>"; };
@@ -130,6 +131,7 @@
 		6E2F71FB1C15255100E81D56 = {
 			isa = PBXGroup;
 			children = (
+				523C19EA1D1A137E00FA1630 /* Package.swift */,
 				52442F3F1C88A48800D42488 /* libcurl.tbd */,
 				525FA9B81C8EE6CD00602E17 /* Tests */,
 				6E18ED7D1C56C303002896B6 /* Swift Compatibility Header */,
