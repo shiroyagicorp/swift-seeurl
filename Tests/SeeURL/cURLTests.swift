@@ -40,6 +40,16 @@ extension cURLTests {
     }
 }
 
+#if !os(OSX)
+    public func allTests() -> [XCTestCaseEntry] {
+        return [
+            testCase(cURLTests.allTests),
+            testCase(HTTPClientTests.allTests)
+        ]
+    }
+#endif
+
+
 final class cURLTests: XCTestCase {
     
     // MARK: - Live Tests
