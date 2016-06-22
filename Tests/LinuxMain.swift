@@ -8,10 +8,10 @@
 
 import XCTest
 import Glibc
+import SeeURLTestSuite
 
-@testable import SeeURLTestSuite
+var tests = [XCTestCaseEntry]()
 
-XCTMain([
-            testCase(cURLTests.allTests),
-            testCase(HTTPClientTests.allTests)
-    ])
+tests += SeeURLTestSuite.allTests()
+
+XCTMain(tests)
