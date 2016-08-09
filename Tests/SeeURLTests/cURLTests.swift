@@ -223,7 +223,7 @@ final class cURLTests: XCTestCase {
         
         let responseData = unsafeBitCast(storage.data, to: [CChar].self)
         
-        print(String(responseData))
+        print(String(describing: responseData))
         /*guard let jsonString = String.fromCString(storage.data),
             let jsonValue = JSON.Value(string: jsonString),
             let jsonObject = jsonValue.objectValue,
