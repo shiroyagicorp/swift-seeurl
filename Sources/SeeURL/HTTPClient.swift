@@ -113,7 +113,7 @@ public struct HTTPClient {
         return (responseCode, resHeaders, resBody)
     }
     
-    public enum Error: ErrorProtocol {
+    public enum Error: Swift.Error {
         
         /// The provided request was malformed.
         case BadRequest

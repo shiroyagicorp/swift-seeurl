@@ -14,7 +14,7 @@
 
 public extension cURL {
     
-    public enum Error: UInt32, ErrorProtocol, CustomStringConvertible {
+    public enum Error: UInt32, Swift.Error, CustomStringConvertible {
         
         case Undefined = 0x999999
         

@@ -19,7 +19,7 @@ public final class cURL {
     
     public typealias Long = CLong
     
-    public typealias Handler = UnsafeMutablePointer<Void>
+    public typealias Handler = UnsafeMutableRawPointer
     
     public typealias Option = CURLoption
     
