@@ -14,7 +14,18 @@
 
 import XCTest
 import SeeURL
+import Foundation
 
+#if SWIFT3_DEV && os(Linux)
+    public typealias Date = NSDate
+    public typealias Data = NSData
+    public typealias URL = NSURL
+    extension Data {
+        convenience init(bytes: UnsafePointer<UInt8>, count: Int) {
+            self.init(bytes: bytes, length: count)
+        }
+    }
+#endif
 
 extension cURLTests {
     static var allTests : [(String, (cURLTests) -> () throws -> Void)] {
@@ -154,9 +165,9 @@ final class cURLTests: XCTestCase {
         
         #if os(OSX) || os(iOS)
             
-        let foundationData = NSData(bytes: bytes, length: bytes.count)
+        let foundationData = Data(bytes: bytes, count: bytes.count)
         
-        try XCTAssert(foundationData == NSData(contentsOf: URL(string: url)!))
+        try XCTAssert(foundationData == Data(contentsOf: URL(string: url)!))
         
         #endif
         
