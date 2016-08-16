@@ -110,7 +110,7 @@ public final class cURL {
     
     public func set(option: Option, _ value: AnyObject) throws {
         
-        let code = curl_easy_setopt_pointer(internalHandler, option, unsafeBitCast(value, to: UnsafeMutablePointer<Void>.self))
+        let code = curl_easy_setopt_pointer(internalHandler, option, unsafeBitCast(value, to: UnsafeMutableRawPointer.self))
         
         guard code.rawValue == CURLE_OK.rawValue else { throw cURL.Error(rawValue: code.rawValue) ?? Error.Undefined }
     }
