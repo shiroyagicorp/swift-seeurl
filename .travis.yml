@@ -12,5 +12,5 @@ install:
 script:
   - swift build -Xlinker -lcurl -Xswiftc -DSWIFT3_DEV
   - swift test
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then xcodebuild -project Xcode/SeeURL.xcodeproj build test -scheme "SeeURL OS X" ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then xcodebuild -project Xcode/SeeURL.xcodeproj build test -scheme "SeeURL" ; fi
   
