@@ -106,6 +106,7 @@ public struct HTTPClient {
         
         let responseCode = try curl.get(info: CURLINFO_RESPONSE_CODE) as Int
         
+        responseHeaderStorage.data.append(0)
         let resHeaders = ResponseHeaderParser(data: unsafeBitCast(responseHeaderStorage.data, to: [CChar].self)).parse()
         
         let resBody = responseBodyStorage.data
