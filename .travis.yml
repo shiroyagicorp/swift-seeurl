@@ -6,11 +6,12 @@ sudo: required
 dist: trusty
 osx_image: xcode8
 env:
-  - SWIFT_VERSION=DEVELOPMENT-SNAPSHOT-2016-08-15-a
+  - SWIFT_VERSION=DEVELOPMENT-SNAPSHOT-2016-09-04-a
 install:
   - eval "$(curl -sL https://gist.githubusercontent.com/kylef/5c0475ff02b7c7671d2a/raw/02090c7ede5a637b76e6df1710e83cd0bbe7dcdf/swiftenv-install.sh)"
 script:
-  - swift build -Xlinker -lcurl -Xswiftc -DSWIFT3_DEV
-  - swift test
+  - make debug
+  - make release
+  - make test
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then xcodebuild -project Xcode/SeeURL.xcodeproj build test -scheme "SeeURL" ; fi
   

@@ -101,7 +101,7 @@ public final class cURL {
         guard code.rawValue == CURLE_OK.rawValue else { throw cURL.Error(rawValue: code.rawValue) ?? Error.Undefined }
     }
     
-    public func set(option: Option, _ value: curl_read_callback) throws {
+    public func set(option: Option, _ value: @escaping curl_read_callback) throws {
         
         let code = curl_easy_setopt_func(internalHandler, option, value)
         
