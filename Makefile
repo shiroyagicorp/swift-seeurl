@@ -13,6 +13,11 @@ ifeq ($(OS),Darwin)
 	BUILD_OPTS=-Xlinker -lcurl
 endif
 
+OSVER=$(shell lsb_release -sr)
+ifeq ($(OSVER),14.04)
+	BUILD_OPTS+=-Xswiftc -DLIBCURL_OLD
+endif
+
 all: debug test
 
 release: CONF_ENV=release 
