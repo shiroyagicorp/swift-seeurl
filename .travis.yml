@@ -3,12 +3,12 @@ os:
   - osx
 language: generic
 sudo: required
-dist: trusty
+dist: xenial
 osx_image: xcode8
 env:
   global:
-    - SWIFT_VERSION=DEVELOPMENT-SNAPSHOT-2016-09-04-a
-    - TOOLCHAINS=org.swift.3020160904a
+    - SWIFT_VERSION=DEVELOPMENT-SNAPSHOT-2016-10-04-a
+    - TOOLCHAINS=org.swift.3020161004a
 install:
   - eval "$(curl -sL https://gist.githubusercontent.com/kylef/5c0475ff02b7c7671d2a/raw/02090c7ede5a637b76e6df1710e83cd0bbe7dcdf/swiftenv-install.sh)"
 script:
