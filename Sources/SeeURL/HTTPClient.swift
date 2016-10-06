@@ -123,7 +123,7 @@ public struct HTTPClient {
 
 // MARK: - Linux Support
 
-#if os(Linux)
+#if LIBCURL_OLD
     
     public let CURLOPT_WRITEDATA = CURLOPT_FILE
     public let CURLOPT_HEADERDATA = CURLOPT_WRITEHEADER
