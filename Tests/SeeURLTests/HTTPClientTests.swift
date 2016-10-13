@@ -21,7 +21,8 @@ extension HTTPClientTests {
         return [
             ("testStatusCode", testStatusCode),
             ("testSSLStatusCode", testSSLStatusCode),
-            ("testResponseBody", testResponseBody)
+            ("testResponseBody", testResponseBody),
+            ("testCustomUserAgent", testCustomUserAgent)
         ]
     }
 }
@@ -87,5 +88,29 @@ final class HTTPClientTests: XCTestCase {
         
         // TODO: implement user agent
         
+    }
+    
+    func testCustomUserAgent() {
+        
+        let url = "http://httpbin.org/user-agent"
+        
+        var response: HTTPClient.Response!
+        
+        let myUserAgent = "mycustom-useragent-abc123"
+        do {
+            response = try HTTPClient.sendRequest(method: "GET", url: url, headers: [("User-Agent", myUserAgent)])
+        }
+        catch { XCTFail("\(error)"); return }
+        
+        let statusCode = response.0
+        
+        XCTAssert(statusCode == 200, "\(statusCode) == \(200)")
+        
+        let responseString = String(cString: unsafeBitCast(response.2, to: [CChar].self))
+        
+        print(responseString)
+        
+        XCTAssertTrue(responseString.contains("user-agent"))
+        XCTAssertTrue(responseString.contains(myUserAgent))
     }
 }
