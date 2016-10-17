@@ -12,6 +12,8 @@
     import CcURL
 #endif
 
+import Foundation
+
 public extension cURL {
     
     public typealias WriteCallBack = curl_write_callback
@@ -20,7 +22,7 @@ public extension cURL {
     
     public final class WriteFunctionStorage {
         
-        public var data = [UInt8]()
+        public var data = Data()
         
         public init() { }
     }
