@@ -12,6 +12,8 @@
     import CcURL
 #endif
 
+import Foundation
+
 /// Loads HTTP requests
 public struct HTTPClient {
     
@@ -32,7 +34,7 @@ public struct HTTPClient {
     }
     
     public typealias Header = (String, String)
-    public typealias Response = (Int, [Header], [UInt8])
+    public typealias Response = (Int, [Header], Data)
     
     public static func sendRequest(method: String, url: String, headers: [Header] = [], body: [UInt8] = [], options: Options = Options()) throws -> Response {
         
@@ -107,7 +109,7 @@ public struct HTTPClient {
         let responseCode = try curl.get(info: CURLINFO_RESPONSE_CODE) as Int
         
         responseHeaderStorage.data.append(0)
-        let resHeaders = ResponseHeaderParser(data: unsafeBitCast(responseHeaderStorage.data, to: [CChar].self)).parse()
+        let resHeaders = ResponseHeaderParser(responseHeaderStorage.data).parse()
         
         let resBody = responseBodyStorage.data
         
