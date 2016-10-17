@@ -77,7 +77,7 @@ final class HTTPClientTests: XCTestCase {
         
         XCTAssert(statusCode == 200, "\(statusCode) == \(200)")
         
-        let responseString = String(cString: unsafeBitCast(response.2, to: [CChar].self))
+        let responseString = String(data: response.2, encoding: .utf8)!
 
         print(response.1)
         
@@ -106,7 +106,7 @@ final class HTTPClientTests: XCTestCase {
         
         XCTAssert(statusCode == 200, "\(statusCode) == \(200)")
         
-        let responseString = String(cString: unsafeBitCast(response.2, to: [CChar].self))
+        let responseString = String(data: response.2, encoding: .utf8)!
         
         print(responseString)
         
