@@ -6,11 +6,13 @@
 //  Copyright © 2016 PureSwift. All rights reserved.
 //
 
+import Foundation
+
 struct ResponseHeaderParser {
     let headerString: String
-    init(data: [CChar]) {
+    init(_ data: Data) {
         //print("parsing header0", data)
-        headerString = String(validatingUTF8: data) ?? ""
+        headerString = String(data: data, encoding: .utf8) ?? ""
     }
     func parse() -> [HTTPClient.Header] {
         //print("parsing header1", headerString)
