@@ -109,11 +109,11 @@ public struct HTTPClient {
         let responseCode = try curl.get(info: CURLINFO_RESPONSE_CODE) as Int
         
         responseHeaderStorage.data.append(0)
-        let resHeaders = ResponseHeaderParser(responseHeaderStorage.data).parse()
+        let resHeaders = ResponseHeaderParser(Data(responseHeaderStorage.data)).parse()
         
         let resBody = responseBodyStorage.data
         
-        return (responseCode, resHeaders, resBody)
+        return (responseCode, resHeaders, Data(resBody))
     }
     
     public enum Error: Swift.Error {
