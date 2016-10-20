@@ -22,7 +22,7 @@ public extension cURL {
     
     public final class WriteFunctionStorage {
         
-        public var data = Data()
+        public var data = [] as [UInt8]
         
         public init() { }
     }
