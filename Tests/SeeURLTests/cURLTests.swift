@@ -151,7 +151,7 @@ final class cURLTests: XCTestCase {
         XCTAssert(responseCode == 200, "\(responseCode) == 200")
         
         
-        try XCTAssert(storage.data == Data(contentsOf: URL(string: url)!))
+        try XCTAssert(Data(storage.data) == Data(contentsOf: URL(string: url)!))
         
     }
     
@@ -180,7 +180,7 @@ final class cURLTests: XCTestCase {
         
         XCTAssert(responseCode == 200, "\(responseCode) == 200")
         
-        print("Header:\n\(String(data: storage.data, encoding: .utf8)!)")
+        print("Header:\n\(String(data: Data(storage.data), encoding: .utf8)!)")
     }
     
     func testSetHeaderOption() {
@@ -214,7 +214,7 @@ final class cURLTests: XCTestCase {
         
         XCTAssert(responseCode == 200, "\(responseCode) == 200")
         
-        print(String(data: storage.data, encoding: .utf8)!)
+        print(String(data: Data(storage.data), encoding: .utf8)!)
         /*guard let jsonString = String.fromCString(storage.data),
             let jsonValue = JSON.Value(string: jsonString),
             let jsonObject = jsonValue.objectValue,
