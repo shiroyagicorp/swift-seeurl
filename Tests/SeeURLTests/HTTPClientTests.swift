@@ -22,7 +22,8 @@ extension HTTPClientTests {
             ("testStatusCode", testStatusCode),
             ("testSSLStatusCode", testSSLStatusCode),
             ("testResponseBody", testResponseBody),
-            ("testCustomUserAgent", testCustomUserAgent)
+            ("testCustomUserAgent", testCustomUserAgent),
+            ("testEffectiveURL", testEffectiveURL)
         ]
     }
 }
@@ -41,7 +42,7 @@ final class HTTPClientTests: XCTestCase {
         }
         catch { XCTFail("\(error)"); return }
         
-        let statusCode = response.0
+        let statusCode = response.statusCode
         
         XCTAssert(statusCode == 200, "\(statusCode) == \(200)")
     }
@@ -57,7 +58,7 @@ final class HTTPClientTests: XCTestCase {
         }
         catch { XCTFail("\(error)"); return }
         
-        let statusCode = response.0
+        let statusCode = response.statusCode
         
         XCTAssert(statusCode == 200, "\(statusCode) == \(200)")
     }
@@ -73,16 +74,16 @@ final class HTTPClientTests: XCTestCase {
         }
         catch { XCTFail("\(error)"); return }
         
-        let statusCode = response.0
+        let statusCode = response.statusCode
         
         XCTAssert(statusCode == 200, "\(statusCode) == \(200)")
         
-        let responseString = String(data: response.2, encoding: .utf8)!
+        let responseString = String(data: response.body, encoding: .utf8)!
 
-        print(response.1)
+        print(response.headers)
         
-        XCTAssertEqual(response.1[0].0, "Server")
-        XCTAssertEqual(response.1[0].1, "nginx")
+        XCTAssertEqual(response.headers[0].0, "Server")
+        XCTAssertEqual(response.headers[0].1, "nginx")
         
         XCTAssertTrue(responseString.contains("user-agent"))
         
@@ -102,15 +103,32 @@ final class HTTPClientTests: XCTestCase {
         }
         catch { XCTFail("\(error)"); return }
         
-        let statusCode = response.0
+        let statusCode = response.statusCode
         
         XCTAssert(statusCode == 200, "\(statusCode) == \(200)")
         
-        let responseString = String(data: response.2, encoding: .utf8)!
+        let responseString = String(data: response.body, encoding: .utf8)!
         
         print(responseString)
         
         XCTAssertTrue(responseString.contains("user-agent"))
         XCTAssertTrue(responseString.contains(myUserAgent))
+    }
+    
+    
+    func testEffectiveURL() throws {
+        
+        let url = "http://httpbin.org/redirect/2"
+        
+        let response = try HTTPClient.sendRequest(method: "GET", url: url)
+        
+        let statusCode = response.statusCode
+        
+        XCTAssert(statusCode == 200, "\(statusCode) == \(200)")
+        
+        let responseString = String(data: response.body, encoding: .utf8)!
+        
+        print(responseString)
+        XCTAssertEqual(response.effectiveURL, "http://httpbin.org/get")
     }
 }
