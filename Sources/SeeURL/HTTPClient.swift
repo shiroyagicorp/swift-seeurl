@@ -34,7 +34,12 @@ public struct HTTPClient {
     }
     
     public typealias Header = (String, String)
-    public typealias Response = (Int, [Header], Data)
+    public struct Response {
+        public let statusCode: Int
+        public let headers: [Header]
+        public let body: Data
+        public let effectiveURL: String
+    }
     
     public static func sendRequest(method: String, url: String, headers: [Header] = [], body: [UInt8] = [], options: Options = Options()) throws -> Response {
         
@@ -113,7 +118,13 @@ public struct HTTPClient {
         
         let resBody = responseBodyStorage.data
         
-        return (responseCode, resHeaders, Data(resBody))
+        let effectiveURLString = try curl.get(info: CURLINFO_EFFECTIVE_URL) as String
+
+        return Response(statusCode: responseCode,
+                        headers: resHeaders,
+                        body: Data(resBody),
+                        effectiveURL: effectiveURLString)
+        
     }
     
     public enum Error: Swift.Error {
