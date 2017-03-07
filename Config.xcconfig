@@ -1,0 +1,11 @@
+//
+//  Config.xcconfig
+//  SeeURL
+//
+//  Created by Yusuke Ito on 3/7/17.
+//
+//
+
+//HEADER_SEARCH_PATHS = $(inherited) 
+
+OTHER_LDFLAGS = $(inherited) -lcurl

@@ -6,11 +6,7 @@
 //  Copyright © 2015 PureSwift. All rights reserved.
 //
 
-#if os(OSX) || os(iOS)
-    import cURL
-#elseif os(Linux)
-    import CcURL
-#endif
+import CcURL
 
 /// Class that encapsulates cURL handler.
 public final class cURL {
