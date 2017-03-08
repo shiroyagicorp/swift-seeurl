@@ -2,7 +2,7 @@
 
 [![Swift](https://img.shields.io/badge/swift-3.0-orange.svg?style=flat)](https://developer.apple.com/swift/)
 [![Swift](https://img.shields.io/badge/swift-3.1-orange.svg?style=flat)](https://developer.apple.com/swift/)
-[![Platforms](https://img.shields.io/badge/platform-osx%20%7C%20ios%20%7C%20tvos%20%7C%20linux-lightgrey.svg)](https://developer.apple.com/swift/)
+[![Platforms](https://img.shields.io/badge/platform-macOS%20%7C%20Linux-lightgrey.svg)](https://developer.apple.com/swift/)
 [![License](https://img.shields.io/badge/license-MIT-71787A.svg)](https://tldrlegal.com/license/mit-license)
 
 libcurl based HTTP(S) Client for Swift.
@@ -41,3 +41,11 @@ sudo apt-get install libcurl4-openssl-dev
 let result = try HTTPClient.sendRequest("GET", "https://google.com")
 print(result.statusCode, result.body)
 ```
+
+## LICENSE
+
+MIT
+
+### Acknowledgement
+
+* [PureSwift/SeeURL](https://github.com/PureSwift/SeeURL)
