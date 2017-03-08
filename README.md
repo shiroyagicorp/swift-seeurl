@@ -1,28 +1,43 @@
 # SeeURL
 
 [![Swift](https://img.shields.io/badge/swift-3.0-orange.svg?style=flat)](https://developer.apple.com/swift/)
+[![Swift](https://img.shields.io/badge/swift-3.1-orange.svg?style=flat)](https://developer.apple.com/swift/)
 [![Platforms](https://img.shields.io/badge/platform-osx%20%7C%20ios%20%7C%20tvos%20%7C%20linux-lightgrey.svg)](https://developer.apple.com/swift/)
 [![License](https://img.shields.io/badge/license-MIT-71787A.svg)](https://tldrlegal.com/license/mit-license)
 
-[![SPM compatible](https://img.shields.io/badge/SPM-compatible-4BC51D.svg?style=flat)](https://github.com/apple/swift-package-manager)
-[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+libcurl based HTTP(S) Client for Swift.
 
-Swift wrapper for cURL
+## Installation
 
-## Compiling on Ubuntu
+* Add `SeeURL` to `Package.swift` of your project.
 
-First install SwiftFoundation [dependencies](https://github.com/PureSwift/SwiftFoundation#compiling-on-ubuntu).
+```swift
+import PackageDescription
+
+let package = Package(
+    dependencies: [
+        .Package(url: "https://github.com/shiroyagicorp/swift-seeurl.git", majorVersion: 1, minor: 6)
+    ]
+)
+```
+
+_Note:_ You may need to specify library path for libmysqlclient to link with.
+
+```sh
+swift build -Xlinker -L/usr/lib -Xlinker -lcurl
+```
+
+
+### Ubuntu
 
 ```
 sudo apt-get install libcurl4-openssl-dev
-sudo cp cURLSwift.h /usr/include/curl
 ```
 
-## Building libcurl for OS X
+
+## Usage
+
 ```
-$ brew install openssl
-$ cd curl-
-$ ./configure --prefix=/usr/local/opt/curl --with-ssl=/usr/local/opt/openssl --with-ca-bundle=/usr/local/etc/openssl/cert.pem
-$ make
-$ make install
+let result = try HTTPClient.sendRequest("GET", "https://google.com")
+print(result.statusCode, result.body)
 ```
