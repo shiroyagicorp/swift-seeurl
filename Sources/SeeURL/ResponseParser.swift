@@ -3,7 +3,7 @@
 //  SeeURL
 //
 //  Created by ito on 2/20/16.
-//  Copyright © 2016 PureSwift. All rights reserved.
+//  Copyright © 2016 Shiroyagi Corporation. All rights reserved.
 //
 
 import Foundation

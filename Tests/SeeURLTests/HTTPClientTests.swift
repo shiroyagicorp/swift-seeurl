@@ -4,6 +4,7 @@
 //
 //  Created by Alsey Coleman Miller on 8/9/15.
 //  Copyright © 2015 PureSwift. All rights reserved.
+//  Copyright © 2016 Shiroyagi Corporation. All rights reserved.
 //
 
 import CcURL
