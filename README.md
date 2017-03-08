@@ -21,7 +21,7 @@ let package = Package(
 )
 ```
 
-_Note:_ You may need to specify library path for libmysqlclient to link with.
+_Note:_ You may need to specify linker flags for libcurl while building your project.
 
 ```sh
 swift build -Xlinker -L/usr/lib -Xlinker -lcurl
