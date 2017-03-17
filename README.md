@@ -30,14 +30,14 @@ swift build -Xlinker -L/usr/lib -Xlinker -lcurl
 
 ### Ubuntu
 
-```
+```sh
 sudo apt-get install libcurl4-openssl-dev
 ```
 
 
 ## Usage
 
-```
+```swift
 let result = try HTTPClient.sendRequest("GET", "https://google.com")
 print(result.statusCode, result.body)
 ```

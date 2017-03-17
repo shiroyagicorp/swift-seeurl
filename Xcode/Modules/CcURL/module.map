@@ -1,0 +1,5 @@
+module CcURL [system] {
+header "../../../Sources/CcURL/include/cURLSwift.h"
+export *
+}
+

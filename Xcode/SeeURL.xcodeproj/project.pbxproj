@@ -49,9 +49,9 @@
 		523C19EA1D1A137E00FA1630 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Package.swift; path = ../Package.swift; sourceTree = "<group>"; };
 		52442F3F1C88A48800D42488 /* libcurl.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libcurl.tbd; path = usr/lib/libcurl.tbd; sourceTree = SDKROOT; };
 		525FA9B91C8EE6CD00602E17 /* LinuxMain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinuxMain.swift; sourceTree = "<group>"; };
+		529974EA1E7BEB4000EB8670 /* cURLSwift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = cURLSwift.h; path = ../Sources/CcURL/include/cURLSwift.h; sourceTree = "<group>"; };
 		52B7DEB41D59BBA100C603B3 /* cURLTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = cURLTests.swift; sourceTree = "<group>"; };
 		52B7DEB51D59BBA100C603B3 /* HTTPClientTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPClientTests.swift; sourceTree = "<group>"; };
-		6E18ED7E1C56C346002896B6 /* cURLSwift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cURLSwift.h; path = ../cURLSwift.h; sourceTree = "<group>"; };
 		6E2F72051C15255100E81D56 /* SeeURL.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SeeURL.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E2F72081C15255100E81D56 /* SeeURL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SeeURL.h; sourceTree = "<group>"; };
 		6E2F720A1C15255100E81D56 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -122,7 +122,7 @@
 		6E18ED7D1C56C303002896B6 /* Swift Compatibility Header */ = {
 			isa = PBXGroup;
 			children = (
-				6E18ED7E1C56C346002896B6 /* cURLSwift.h */,
+				529974EA1E7BEB4000EB8670 /* cURLSwift.h */,
 			);
 			name = "Swift Compatibility Header";
 			path = "../Swift Compatibility Header";
