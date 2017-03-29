@@ -78,8 +78,17 @@ final class HTTPClientTests: XCTestCase {
 
         print(response.headers)
         
-        XCTAssertEqual(response.headers[0].0, "Server")
-        XCTAssertEqual(response.headers[0].1, "nginx")
+        func hasContainsHeader(key: String, valueContains: String) -> Bool {
+            for h in response.headers {
+                if h.0 == key && h.1.contains(valueContains) {
+                    return true
+                }
+            }
+            return false
+        }
+        
+        XCTAssertTrue(hasContainsHeader(key: "Server", valueContains: "gunicorn") ||
+                    hasContainsHeader(key: "Server", valueContains: "nginx"))
         
         XCTAssertTrue(responseString.contains("user-agent"))
         
