@@ -38,7 +38,7 @@ public func curlWriteFunction(contents: UnsafeMutablePointer<Int8>?, size: Int, 
     
     for _ in 1...realsize {
         
-        let byte = unsafeBitCast(pointer.pointee, to: UInt8.self)
+        let byte = UInt8(bitPattern: pointer.pointee)
         
         storage.data.append(byte)
         

@@ -87,8 +87,7 @@ final class HTTPClientTests: XCTestCase {
             return false
         }
         
-        XCTAssertTrue(hasContainsHeader(key: "Server", valueContains: "gunicorn") ||
-                    hasContainsHeader(key: "Server", valueContains: "nginx"))
+        XCTAssertTrue(hasContainsHeader(key: "Content-Type", valueContains: "application/json"))
         
         XCTAssertTrue(responseString.contains("user-agent"))
         
