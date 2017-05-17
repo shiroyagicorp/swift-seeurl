@@ -19,7 +19,8 @@ extension HTTPClientTests {
             ("testSSLStatusCode", testSSLStatusCode),
             ("testResponseBody", testResponseBody),
             ("testCustomUserAgent", testCustomUserAgent),
-            ("testEffectiveURL", testEffectiveURL)
+            ("testEffectiveURL", testEffectiveURL),
+            ("testFetchLargeFile", testFetchLargeFile),
         ]
     }
 }
@@ -159,6 +160,7 @@ final class HTTPClientTests: XCTestCase {
         XCTAssertTrue(containsInHeader(response.headers, key: "Content-Type", valueContains: "application/x-gzip"))
         
         print("response body size:", response.body.count)
+        
         
         XCTAssertEqual(response.body.count, 33251183)
         

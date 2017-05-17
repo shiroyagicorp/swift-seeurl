@@ -9,6 +9,7 @@
 
 import CcURL
 import Foundation
+import CoreFoundation
 
 public extension cURL {
     

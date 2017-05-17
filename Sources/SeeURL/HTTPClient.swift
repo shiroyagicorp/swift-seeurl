@@ -118,7 +118,7 @@ public struct HTTPClient {
 
         return Response(statusCode: responseCode,
                         headers: resHeaders,
-                        body: resBody as Data,
+                        body: Data(referencing: resBody),
                         effectiveURL: effectiveURLString)
         
     }
