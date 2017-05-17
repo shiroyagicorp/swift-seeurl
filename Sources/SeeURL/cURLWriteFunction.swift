@@ -18,7 +18,7 @@ public extension cURL {
     
     public final class WriteFunctionStorage {
         
-        public var data = [] as [UInt8]
+        public let data = NSMutableData()
         
         public init() { }
     }
@@ -30,20 +30,11 @@ public func curlWriteFunction(contents: UnsafeMutablePointer<Int8>?, size: Int, 
         return 0
     }
     
-    let storage = unsafeBitCast(readData, to: cURL.WriteFunctionStorage.self)
+    let storage = Unmanaged<cURL.WriteFunctionStorage>.fromOpaque(readData).takeUnretainedValue()
     
     let realsize = size * nmemb
     
-    var pointer = contents
-    
-    for _ in 1...realsize {
-        
-        let byte = UInt8(bitPattern: pointer.pointee)
-        
-        storage.data.append(byte)
-        
-        pointer = pointer.successor()
-    }
+    storage.data.append(contents, length: realsize)
     
     return realsize
 }

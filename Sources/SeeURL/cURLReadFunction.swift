@@ -32,7 +32,7 @@ public func curlReadFunction(pointer: UnsafeMutablePointer<Int8>?, size: Int, nm
     
     guard let pointer = pointer, let readData = readData else { return 0 }
     
-    let storage = unsafeBitCast(readData, to: cURL.ReadFunctionStorage.self)
+    let storage = Unmanaged<cURL.ReadFunctionStorage>.fromOpaque(readData).takeUnretainedValue()
     
     let data = storage.data
     

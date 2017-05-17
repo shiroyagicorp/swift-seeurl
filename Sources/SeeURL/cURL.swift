@@ -105,9 +105,9 @@ public final class cURL {
         guard code.rawValue == CURLE_OK.rawValue else { throw cURL.Error(rawValue: code.rawValue) ?? Error.Undefined }
     }
     
-    public func set(option: Option, _ value: AnyObject) throws {
+    public func set<T>(option: Option, _ value: Unmanaged<T>) throws {
         
-        let code = curl_easy_setopt_pointer(internalHandler, option, unsafeBitCast(value, to: UnsafeMutableRawPointer.self))
+        let code = curl_easy_setopt_pointer(internalHandler, option, value.toOpaque())
         
         guard code.rawValue == CURLE_OK.rawValue else { throw cURL.Error(rawValue: code.rawValue) ?? Error.Undefined }
     }

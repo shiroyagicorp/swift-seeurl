@@ -94,13 +94,13 @@ public struct HTTPClient {
         
         let responseBodyStorage = cURL.WriteFunctionStorage()
         
-        try! curl.set(option:CURLOPT_WRITEDATA, responseBodyStorage)
+        try! curl.set(option:CURLOPT_WRITEDATA, Unmanaged.passUnretained(responseBodyStorage))
         
         try! curl.set(option:CURLOPT_WRITEFUNCTION, curlWriteFunction)
         
         let responseHeaderStorage = cURL.WriteFunctionStorage()
         
-        try! curl.set(option:CURLOPT_HEADERDATA, responseHeaderStorage)
+        try! curl.set(option:CURLOPT_HEADERDATA, Unmanaged.passUnretained(responseHeaderStorage))
         
         try! curl.set(option:CURLOPT_HEADERFUNCTION, curlWriteFunction)
         
@@ -109,8 +109,8 @@ public struct HTTPClient {
         
         let responseCode = try curl.get(info: CURLINFO_RESPONSE_CODE) as Int
         
-        responseHeaderStorage.data.append(0)
-        let resHeaders = ResponseHeaderParser(Data(responseHeaderStorage.data)).parse()
+        responseHeaderStorage.data.append(Data([0]))
+        let resHeaders = ResponseHeaderParser(responseHeaderStorage.data).parse()
         
         let resBody = responseBodyStorage.data
         
@@ -118,15 +118,9 @@ public struct HTTPClient {
 
         return Response(statusCode: responseCode,
                         headers: resHeaders,
-                        body: Data(resBody),
+                        body: resBody as Data,
                         effectiveURL: effectiveURLString)
         
-    }
-    
-    public enum Error: Swift.Error {
-        
-        /// The provided request was malformed.
-        case BadRequest
     }
 }
 
