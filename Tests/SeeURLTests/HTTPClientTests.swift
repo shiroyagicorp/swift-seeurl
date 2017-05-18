@@ -144,7 +144,7 @@ final class HTTPClientTests: XCTestCase {
     
     func testFetchLargeFile() throws {
         
-        let url = "http://ftp.jaist.ac.jp/pub/Linux/ubuntu/dists/xenial/Contents-amd64.gz"
+        let url = "https://swift.org/builds/swift-3.1.1-release/ubuntu1610/swift-3.1.1-RELEASE/swift-3.1.1-RELEASE-ubuntu16.10.tar.gz"
         
         var response: HTTPClient.Response!
         
@@ -162,7 +162,7 @@ final class HTTPClientTests: XCTestCase {
         print("response body size:", response.body.count)
         
         
-        XCTAssertEqual(response.body.count, 33251183)
+        XCTAssertEqual(response.body.count, 122736672)
         
     }
 }
