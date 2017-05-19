@@ -4,6 +4,7 @@
 [![Swift](https://img.shields.io/badge/swift-3.1-orange.svg?style=flat)](https://developer.apple.com/swift/)
 [![Platforms](https://img.shields.io/badge/platform-macOS%20%7C%20Linux-lightgrey.svg)](https://developer.apple.com/swift/)
 [![License](https://img.shields.io/badge/license-MIT-71787A.svg)](https://tldrlegal.com/license/mit-license)
+[![Build Status](https://travis-ci.org/shiroyagicorp/swift-seeurl.svg?branch=master)](https://travis-ci.org/shiroyagicorp/swift-seeurl)
 
 libcurl based HTTP(S) Client for Swift.
 
