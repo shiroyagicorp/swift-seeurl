@@ -109,7 +109,7 @@ final class cURLTests: XCTestCase {
         
         let dataStorage = cURL.ReadFunctionStorage(data: data)
         
-        try! curl.set(option: CURLOPT_READDATA, dataStorage)
+        try! curl.set(option: CURLOPT_READDATA, Unmanaged.passUnretained(dataStorage))
                 
         try! curl.set(option: CURLOPT_READFUNCTION, curlReadFunction)
         
@@ -135,7 +135,7 @@ final class cURLTests: XCTestCase {
         
         let storage = cURL.WriteFunctionStorage()
         
-        try! curl.set(option: CURLOPT_WRITEDATA, storage)
+        try! curl.set(option: CURLOPT_WRITEDATA, Unmanaged.passUnretained(storage))
         
         try! curl.set(option: CURLOPT_WRITEFUNCTION, cURL.WriteFunction)
         
@@ -147,7 +147,7 @@ final class cURLTests: XCTestCase {
         XCTAssert(responseCode == 200, "\(responseCode) == 200")
         
         
-        try XCTAssert(Data(storage.data) == Data(contentsOf: URL(string: url)!))
+        try XCTAssert(storage.data == NSData(contentsOf: URL(string: url)!))
         
     }
     
@@ -165,7 +165,7 @@ final class cURLTests: XCTestCase {
         
         let storage = cURL.WriteFunctionStorage()
         
-        try! curl.set(option: CURLOPT_HEADERDATA, storage)
+        try! curl.set(option: CURLOPT_HEADERDATA, Unmanaged.passUnretained(storage))
         
         try! curl.set(option: CURLOPT_HEADERFUNCTION, cURL.WriteFunction)
         
@@ -176,7 +176,7 @@ final class cURLTests: XCTestCase {
         
         XCTAssert(responseCode == 200, "\(responseCode) == 200")
         
-        print("Header:\n\(String(data: Data(storage.data), encoding: .utf8)!)")
+        print("Header:\n\(String(data: Data(referencing: storage.data) , encoding: .utf8)!)")
     }
     
     func testSetHeaderOption() {
@@ -199,7 +199,7 @@ final class cURLTests: XCTestCase {
         
         let storage = cURL.WriteFunctionStorage()
         
-        try! curl.set(option: CURLOPT_WRITEDATA, storage)
+        try! curl.set(option: CURLOPT_WRITEDATA, Unmanaged.passUnretained(storage))
         
         try! curl.set(option: CURLOPT_WRITEFUNCTION, curlWriteFunction)
         
@@ -210,7 +210,7 @@ final class cURLTests: XCTestCase {
         
         XCTAssert(responseCode == 200, "\(responseCode) == 200")
         
-        print(String(data: Data(storage.data), encoding: .utf8)!)
+        print(String(data: Data(referencing: storage.data), encoding: .utf8)!)
         /*guard let jsonString = String.fromCString(storage.data),
             let jsonValue = JSON.Value(string: jsonString),
             let jsonObject = jsonValue.objectValue,

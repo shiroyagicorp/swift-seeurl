@@ -10,9 +10,9 @@ import Foundation
 
 struct ResponseHeaderParser {
     let headerString: String
-    init(_ data: Data) {
+    init(_ data: NSData) {
         //print("parsing header0", data)
-        headerString = String(data: data, encoding: .utf8) ?? ""
+        headerString = String(data: Data(referencing: data), encoding: .utf8) ?? ""
     }
     func parse() -> [HTTPClient.Header] {
         //print("parsing header1", headerString)

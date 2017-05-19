@@ -19,9 +19,19 @@ extension HTTPClientTests {
             ("testSSLStatusCode", testSSLStatusCode),
             ("testResponseBody", testResponseBody),
             ("testCustomUserAgent", testCustomUserAgent),
-            ("testEffectiveURL", testEffectiveURL)
+            ("testEffectiveURL", testEffectiveURL),
+            ("testFetchLargeFile", testFetchLargeFile),
         ]
     }
+}
+
+func containsInHeader(_ headers: [HTTPClient.Header], key: String, valueContains: String) -> Bool {
+    for h in headers {
+        if h.0.lowercased() == key.lowercased() && h.1.contains(valueContains) {
+            return true
+        }
+    }
+    return false
 }
 
 
@@ -59,7 +69,7 @@ final class HTTPClientTests: XCTestCase {
         XCTAssert(statusCode == 200, "\(statusCode) == \(200)")
     }
     
-    func testResponseBody() {
+    func testResponseBody() throws {
         
         let url = "http://httpbin.org/user-agent"
         
@@ -78,20 +88,16 @@ final class HTTPClientTests: XCTestCase {
 
         print(response.headers)
         
-        func hasContainsHeader(key: String, valueContains: String) -> Bool {
-            for h in response.headers {
-                if h.0 == key && h.1.contains(valueContains) {
-                    return true
-                }
-            }
-            return false
+        XCTAssertTrue(containsInHeader(response.headers, key: "Content-Type", valueContains: "application/json"))
+        
+        guard let json = try JSONSerialization.jsonObject(with: response.body, options: []) as? [String: String] else {
+            fatalError("invalid response type, \(responseString)")
         }
         
-        XCTAssertTrue(hasContainsHeader(key: "Content-Type", valueContains: "application/json"))
-        
-        XCTAssertTrue(responseString.contains("user-agent"))
-        
-        // TODO: implement user agent
+        guard let userAgent = json["user-agent"] else {
+            fatalError("no user-agent field in response, \(json)")
+        }
+        XCTAssertTrue(userAgent.hasPrefix("curl/"))
         
     }
     
@@ -134,5 +140,29 @@ final class HTTPClientTests: XCTestCase {
         
         print(responseString)
         XCTAssertEqual(response.effectiveURL, "http://httpbin.org/get")
+    }
+    
+    func testFetchLargeFile() throws {
+        
+        let url = "https://swift.org/builds/swift-3.1.1-release/ubuntu1610/swift-3.1.1-RELEASE/swift-3.1.1-RELEASE-ubuntu16.10.tar.gz"
+        
+        var response: HTTPClient.Response!
+        
+        do {
+            response = try HTTPClient.sendRequest(method: "GET", url: url)
+        }
+        catch { XCTFail("\(error)"); return }
+        
+        let statusCode = response.statusCode
+        
+        XCTAssert(statusCode == 200, "\(statusCode) == \(200)")
+        
+        XCTAssertTrue(containsInHeader(response.headers, key: "Content-Type", valueContains: "application/x-gzip"))
+        
+        print("response body size:", response.body.count)
+        
+        
+        XCTAssertEqual(response.body.count, 122736672)
+        
     }
 }
