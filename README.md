@@ -39,6 +39,7 @@ sudo apt-get install libcurl4-openssl-dev
 ## Usage
 
 ```swift
+import SeeURL
 let result = try HTTPClient.sendRequest(method: "GET", url: "https://google.com")
 print(result.statusCode, result.body)
 ```
