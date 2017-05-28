@@ -9,6 +9,39 @@
 
 import CcURL
 
+#if os(Linux)
+    import Glibc
+#elseif os(macOS)
+    import Darwin.C
+#endif
+
+fileprivate final class cURLGlobal {
+    
+    static let shared = cURLGlobal()
+    
+    private init() {
+        pthread_mutex_init(&mutex, nil)
+    }
+    
+    private var mutex = pthread_mutex_t()
+    
+    private var isInitialized: Bool = false
+    func initialize() {
+        pthread_mutex_lock(&mutex)
+        defer {
+            pthread_mutex_unlock(&mutex)
+        }
+        
+        if isInitialized {
+            return
+        }
+        
+        _ = curl_global_init(Int(CURL_GLOBAL_SSL))
+        
+        isInitialized = true
+    }
+}
+
 /// Class that encapsulates cURL handler.
 public final class cURL {
     
@@ -51,7 +84,7 @@ public final class cURL {
     }
     
     public init() {
-        
+        cURLGlobal.shared.initialize()
         internalHandler = curl_easy_init()
     }
     
