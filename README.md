@@ -32,7 +32,7 @@ swift build -Xlinker -L/usr/lib -Xlinker -lcurl
 ### Ubuntu
 
 ```sh
-sudo apt-get install libcurl4-openssl-dev
+sudo apt-get install libcurl4-gnutls-dev
 ```
 
 
