@@ -37,7 +37,11 @@ public extension cURL {
             
             let errorDescription = String(validatingUTF8: curl_easy_strerror(CURLcode(rawValue: self.rawValue)))
             
-            return errorDescription ?? "cURL.Error(\(self.rawValue))"
+            if let desc = errorDescription {
+                return desc + ", raw error value:\(rawValue)"
+            }
+            
+            return "cURL.Error(\(self.rawValue))"
         }
     }
 }
