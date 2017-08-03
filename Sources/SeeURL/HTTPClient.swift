@@ -13,19 +13,22 @@ import Foundation
 /// Loads HTTP requests
 public struct HTTPClient {
     
-    public struct Options {
-        let timeoutInterval: Int
-        let verbose: Bool
-        let followRedirect: Bool
-        init() {
+    public struct Option {
+        public var timeoutInterval: Int
+        public var verbose: Bool
+        public var followRedirect: Bool
+        public var proxy: String?
+        public init() {
             self.timeoutInterval = 30
             self.verbose = false
             self.followRedirect = true
+            self.proxy = nil
         }
-        public init(timeoutInterval: Int, varbose: Bool, followRedirect: Bool) {
+        public init(timeoutInterval: Int, varbose: Bool, followRedirect: Bool, proxy: String?) {
             self.timeoutInterval = timeoutInterval
             self.verbose = varbose
             self.followRedirect = followRedirect
+            self.proxy = proxy
         }
     }
     
@@ -37,18 +40,21 @@ public struct HTTPClient {
         public let effectiveURL: String
     }
     
-    public static func sendRequest(method: String, url: String, headers: [Header] = [], body: [UInt8] = [], options: Options = Options()) throws -> Response {
+    public static func sendRequest(method: String, url: String, headers: [Header] = [], body: [UInt8] = [], option: Option = Option()) throws -> Response {
         
         let curl = cURL()
         
-        try curl.set(option: CURLOPT_VERBOSE, options.verbose)
+        try curl.set(option: CURLOPT_VERBOSE, option.verbose)
         
         try curl.set(option: CURLOPT_URL, url)
         
-        try curl.set(option: CURLOPT_TIMEOUT, cURL.Long(options.timeoutInterval))
+        try curl.set(option: CURLOPT_TIMEOUT, cURL.Long(option.timeoutInterval))
         
-        try curl.set(option: CURLOPT_FOLLOWLOCATION, options.followRedirect)
+        try curl.set(option: CURLOPT_FOLLOWLOCATION, option.followRedirect)
         
+        if let proxy = option.proxy {
+            try curl.set(option: CURLOPT_PROXY, proxy)
+        }
         
         try curl.set(option: CURLOPT_USERAGENT, "curl/0.0.0")
         
