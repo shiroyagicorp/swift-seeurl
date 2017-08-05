@@ -165,4 +165,23 @@ final class HTTPClientTests: XCTestCase {
         XCTAssertEqual(response.body.count, 122736672)
         
     }
+    
+    // TODO: test
+    /*func testStatusCodeViaProxy() {
+        
+        let url = "http://httpbin.org/status/200"
+        
+        var response: HTTPClient.Response!
+        
+        do {
+            var option = HTTPClient.Option()
+            option.proxy = "localhost:3128"
+            response = try HTTPClient.sendRequest(method: "GET", url: url, option: option)
+        }
+        catch { XCTFail("\(error)"); return }
+        
+        let statusCode = response.statusCode
+        
+        XCTAssert(statusCode == 200, "\(statusCode) == \(200)")
+    }*/
 }
