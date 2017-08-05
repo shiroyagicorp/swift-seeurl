@@ -9,6 +9,7 @@ env:
   matrix:
     - SWIFT_VERSION=3.0.2
     - SWIFT_VERSION=3.1
+    - SWIFT_VERSION=4.0-DEVELOPMENT-SNAPSHOT-2017-08-03-a
 install:
   - if [[ "$SWIFT_VERSION" != "3.0.2" ]] || [[ "$TRAVIS_OS_NAME" != "osx" ]]; then eval "$(curl -sL https://gist.githubusercontent.com/kylef/5c0475ff02b7c7671d2a/raw/02090c7ede5a637b76e6df1710e83cd0bbe7dcdf/swiftenv-install.sh)" ; fi
 script:
