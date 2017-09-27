@@ -1,7 +1,7 @@
 # SeeURL
 
-[![Swift](https://img.shields.io/badge/swift-3.0-orange.svg?style=flat)](https://developer.apple.com/swift/)
 [![Swift](https://img.shields.io/badge/swift-3.1-orange.svg?style=flat)](https://developer.apple.com/swift/)
+[![Swift](https://img.shields.io/badge/swift-4.0-orange.svg?style=flat)](https://developer.apple.com/swift/)
 [![Platforms](https://img.shields.io/badge/platform-macOS%20%7C%20Linux-lightgrey.svg)](https://developer.apple.com/swift/)
 [![License](https://img.shields.io/badge/license-MIT-71787A.svg)](https://tldrlegal.com/license/mit-license)
 [![Build Status](https://travis-ci.org/shiroyagicorp/swift-seeurl.svg?branch=master)](https://travis-ci.org/shiroyagicorp/swift-seeurl)
@@ -17,22 +17,16 @@ import PackageDescription
 
 let package = Package(
     dependencies: [
-        .Package(url: "https://github.com/shiroyagicorp/swift-seeurl.git", majorVersion: 1, minor: 6)
+        .Package(url: "https://github.com/shiroyagicorp/swift-seeurl.git", majorVersion: 1, minor: 8)
     ]
 )
-```
-
-_Note:_ You may need to specify linker flags for libcurl while building your project.
-
-```sh
-swift build -Xlinker -L/usr/lib -Xlinker -lcurl
 ```
 
 
 ### Ubuntu
 
 ```sh
-sudo apt-get install libcurl4-gnutls-dev
+sudo apt-get install libcurl4-openssl-dev
 ```
 
 
