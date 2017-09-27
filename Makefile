@@ -37,9 +37,6 @@ distclean:
 	
 test:
 	$(SWIFT) test $(BUILD_OPTS)
-
-genxcodeproj:
-	$(SWIFT) package generate-xcodeproj --enable-code-coverage $(BUILD_OPTS) 
 	
-genxcodeproj31:
+genxcodeproj:
 	$(SWIFT) package generate-xcodeproj --enable-code-coverage --xcconfig-overrides=Config.xcconfig
