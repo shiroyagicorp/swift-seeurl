@@ -130,14 +130,4 @@ public struct HTTPClient {
     }
 }
 
-// MARK: - Linux Support
-
-#if LIBCURL_OLD
-    
-    public let CURLOPT_WRITEDATA = CURLOPT_FILE
-    public let CURLOPT_HEADERDATA = CURLOPT_WRITEHEADER
-    public let CURLOPT_READDATA = CURLOPT_INFILE
-    public let CURLOPT_RTSPHEADER = CURLOPT_HTTPHEADER
-    
-#endif
 

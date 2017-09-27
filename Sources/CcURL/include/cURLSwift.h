@@ -6,11 +6,27 @@
 //  Copyright © 2016 PureSwift. All rights reserved.
 //
 
+#ifndef CcURL_h
+#define CcURL_h
+
 #include <curl/curl.h>
 #include <stdbool.h>
 #include <stdio.h>
 
 #define CURL_INLINE static __inline__
+
+#ifdef CURLOPT_HEADERDATA
+#undef CURLOPT_HEADERDATA
+static CURLoption CURLOPT_HEADERDATA = CURLOPT_WRITEHEADER;
+#endif
+#ifdef CURLOPT_WRITEDATA
+#undef CURLOPT_WRITEDATA
+static CURLoption CURLOPT_WRITEDATA = CURLOPT_FILE;
+#endif
+#ifdef CURLOPT_READDATA
+#undef CURLOPT_READDATA
+static CURLoption CURLOPT_READDATA = CURLOPT_INFILE;
+#endif
 
 typedef size_t (*curl_func)(char * ptr, size_t size, size_t num, void * ud);
 
@@ -66,3 +82,5 @@ CURLFORMcode FormAdd(struct curl_httppost **httppost,
                      struct curl_httppost **last_post,
                      va_list params);
 
+
+#endif
