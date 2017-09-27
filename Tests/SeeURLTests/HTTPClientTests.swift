@@ -149,7 +149,9 @@ final class HTTPClientTests: XCTestCase {
         var response: HTTPClient.Response!
         
         do {
-            response = try HTTPClient.sendRequest(method: "GET", url: url)
+            var option = HTTPClient.Option()
+            option.timeoutInterval = 180
+            response = try HTTPClient.sendRequest(method: "GET", url: url, option: option)
         }
         catch { XCTFail("\(error)"); return }
         

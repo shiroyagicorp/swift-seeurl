@@ -176,7 +176,7 @@ final class cURLTests: XCTestCase {
         
         XCTAssert(responseCode == 200, "\(responseCode) == 200")
         
-        print("Header:\n\(String(data: Data(referencing: storage.data) , encoding: .utf8)!)")
+        print("Header:\n\(String(data: Data(bytes: storage.data.bytes, count: storage.data.length) , encoding: .utf8)!)")
     }
     
     func testSetHeaderOption() {
