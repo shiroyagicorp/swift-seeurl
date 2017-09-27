@@ -7,7 +7,7 @@
 //  Copyright © 2016 Shiroyagi Corporation. All rights reserved.
 //
 
-import CcURL
+import CCurl // IBM-Swift/CCurl
 import Foundation
 
 /// Loads HTTP requests
