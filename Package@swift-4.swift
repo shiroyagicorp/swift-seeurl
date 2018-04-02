@@ -10,7 +10,7 @@ let package = Package(
         .package(url: "https://github.com/IBM-Swift/CCurl.git", .upToNextMajor(from: "0.4.1"))
     ],
     targets: [
-        .target(name: "CcURL", dependencies: ["CCurl"]), 
+        .target(name: "CcURL", dependencies: []), 
         .target(name: "SeeURL", dependencies: ["CcURL"]),
         .testTarget(name: "SeeURLTests", dependencies: ["SeeURL"])
     ]
