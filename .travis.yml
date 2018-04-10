@@ -4,7 +4,7 @@ dist: trusty
 matrix:
   include:
       - os: osx
-        osx_image: xcode9
+        osx_image: xcode9.2
       - os: linux
         env: SWIFT_VERSION=4.0
       - os: linux
