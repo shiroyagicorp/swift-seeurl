@@ -6,7 +6,7 @@ matrix:
       - os: osx
         osx_image: xcode9.2
       - os: linux
-        env: SWIFT_VERSION=4.0
+        env: SWIFT_VERSION=4.0.3
       - os: linux
         env: SWIFT_VERSION=4.1
 install:
