@@ -25,14 +25,14 @@ struct ResponseHeaderParser {
 
 extension String {
     func splitCRorLF() -> [String] {
-        let part = self.characters.split(whereSeparator: { $0 == Character("\r") || $0 == Character("\n") || $0 == Character("\r\n") })
+        let part = self.split(whereSeparator: { $0 == Character("\r") || $0 == Character("\n") || $0 == Character("\r\n") })
         return part.filter({ $0.count > 0 }).map(String.init)
     }
     func splitByFirstColon() -> [String] {
         var modeIsName: Bool = true
         var name: [Character] = []
         var value: [Character] = []
-        for c in self.characters {
+        for c in self {
             if modeIsName && c == ":" {
                 modeIsName = false
                 continue

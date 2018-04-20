@@ -76,7 +76,11 @@ public final class cURL {
                 
                 pointer.pointee.free()
                 
+                #if swift(>=4.1)
+                pointer.deinitialize(count: 1)
+                #else
                 pointer.deinitialize()
+                #endif
             }
         }
         
