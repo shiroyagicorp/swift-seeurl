@@ -21,14 +21,6 @@ let package = Package(
 )
 ```
 
-
-### Ubuntu
-
-```sh
-sudo apt-get install libcurl4-openssl-dev
-```
-
-
 ## Usage
 
 ```swift
