@@ -16,7 +16,7 @@ import PackageDescription
 
 let package = Package(
     dependencies: [
-        .Package(url: "https://github.com/shiroyagicorp/swift-seeurl.git", majorVersion: 1, minor: 8)
+        .Package(url: "https://github.com/shiroyagicorp/swift-seeurl.git", from: "1.9.0")
     ]
 )
 ```
