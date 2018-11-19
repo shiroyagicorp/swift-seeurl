@@ -12,19 +12,6 @@ import XCTest
 import SeeURL
 import Foundation
 
-extension HTTPClientTests {
-    static var allTests : [(String, (HTTPClientTests) -> () throws -> Void)] {
-        return [
-            ("testStatusCode", testStatusCode),
-            ("testSSLStatusCode", testSSLStatusCode),
-            ("testResponseBody", testResponseBody),
-            ("testCustomUserAgent", testCustomUserAgent),
-            ("testEffectiveURL", testEffectiveURL),
-            ("testFetchLargeFile", testFetchLargeFile),
-        ]
-    }
-}
-
 func containsInHeader(_ headers: [HTTPClient.Header], key: String, valueContains: String) -> Bool {
     for h in headers {
         if h.0.lowercased() == key.lowercased() && h.1.contains(valueContains) {
@@ -41,7 +28,7 @@ final class HTTPClientTests: XCTestCase {
         
         let url = "http://httpbin.org/status/200"
         
-        var response: HTTPClient.Response!
+        let response: HTTPClient.Response
         
         do {
             response = try HTTPClient.sendRequest(method: "GET", url: url)
@@ -57,7 +44,7 @@ final class HTTPClientTests: XCTestCase {
         
         let url = "https://httpbin.org/status/200"
         
-        var response: HTTPClient.Response!
+        let response: HTTPClient.Response
         
         do {
             response = try HTTPClient.sendRequest(method: "GET", url: url)
@@ -73,7 +60,7 @@ final class HTTPClientTests: XCTestCase {
         
         let url = "http://httpbin.org/user-agent"
         
-        var response: HTTPClient.Response!
+        let response: HTTPClient.Response
         
         do {
             response = try HTTPClient.sendRequest(method: "GET", url: url)
@@ -105,7 +92,7 @@ final class HTTPClientTests: XCTestCase {
         
         let url = "http://httpbin.org/user-agent"
         
-        var response: HTTPClient.Response!
+        let response: HTTPClient.Response
         
         let myUserAgent = "mycustom-useragent-abc123"
         do {
@@ -146,7 +133,7 @@ final class HTTPClientTests: XCTestCase {
         
         let url = "https://swift.org/builds/swift-3.1.1-release/ubuntu1610/swift-3.1.1-RELEASE/swift-3.1.1-RELEASE-ubuntu16.10.tar.gz"
         
-        var response: HTTPClient.Response!
+        let response: HTTPClient.Response
         
         do {
             var option = HTTPClient.Option()
@@ -166,6 +153,23 @@ final class HTTPClientTests: XCTestCase {
         
         XCTAssertEqual(response.body.count, 122736672)
         
+    }
+    
+    func testGzippedResponse() throws {
+        
+        let url = "https://httpbin.org/gzip"
+        
+        let response: HTTPClient.Response
+        
+        do {
+            response = try HTTPClient.sendRequest(method: "GET", url: url)
+        }
+        catch { XCTFail("\(error)"); return }
+        
+        let json = try JSONSerialization.jsonObject(with: response.body)
+        
+        let isGzipped = (json as? [String: Any])?["gzipped"] as? Bool
+        XCTAssertEqual(isGzipped, true)
     }
     
     // TODO: test

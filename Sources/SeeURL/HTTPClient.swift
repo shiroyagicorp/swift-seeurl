@@ -14,20 +14,23 @@ import Foundation
 public struct HTTPClient {
     
     public struct Option {
-        public var timeoutInterval: Int
-        public var verbose: Bool
-        public var followRedirect: Bool
-        public var proxy: String?
+        public var timeoutInterval: Int /// CURLOPT_TIMEOUT
+        public var verbose: Bool /// CURLOPT_VERBOSE
+        public var followRedirect: Bool /// CURLOPT_FOLLOWLOCATION
+        public var acceptEncoding: String? /// CURLOPT_ACCEPT_ENCODING
+        public var proxy: String? /// CURLOPT_PROXY
         public init() {
             self.timeoutInterval = 30
             self.verbose = false
             self.followRedirect = true
             self.proxy = nil
+            self.acceptEncoding = ""
         }
-        public init(timeoutInterval: Int, varbose: Bool, followRedirect: Bool, proxy: String?) {
+        public init(timeoutInterval: Int, varbose: Bool, followRedirect: Bool, acceptEncoding: String?, proxy: String?) {
             self.timeoutInterval = timeoutInterval
             self.verbose = varbose
             self.followRedirect = followRedirect
+            self.acceptEncoding = acceptEncoding
             self.proxy = proxy
         }
     }
@@ -51,6 +54,10 @@ public struct HTTPClient {
         try curl.set(option: CURLOPT_TIMEOUT, cURL.Long(option.timeoutInterval))
         
         try curl.set(option: CURLOPT_FOLLOWLOCATION, option.followRedirect)
+        
+        if let acceptEncoding = option.acceptEncoding {
+            try curl.set(option: CURLOPT_ACCEPT_ENCODING, acceptEncoding)
+        }
         
         if let proxy = option.proxy {
             try curl.set(option: CURLOPT_PROXY, proxy)

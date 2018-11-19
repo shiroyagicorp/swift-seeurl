@@ -12,29 +12,6 @@ import XCTest
 import SeeURL
 import Foundation
 
-extension cURLTests {
-    static var allTests : [(String, (cURLTests) -> () throws -> Void)] {
-        return [
-                   ("testGetStatusCode", testGetStatusCode),
-                   ("testPostField", testPostField),
-                   ("testReadFunction", testReadFunction),
-                   ("testWriteFunction", testWriteFunction),
-                   ("testHeaderWriteFunction", testHeaderWriteFunction),
-                   ("testSetHeaderOption", testSetHeaderOption),
-        ]
-    }
-}
-
-#if !os(OSX)
-    public func allTests() -> [XCTestCaseEntry] {
-        return [
-            testCase(cURLTests.allTests),
-            testCase(HTTPClientTests.allTests)
-        ]
-    }
-#endif
-
-
 final class cURLTests: XCTestCase {
     
     // MARK: - Live Tests
