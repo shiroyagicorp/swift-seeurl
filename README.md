@@ -21,6 +21,9 @@ let package = Package(
 )
 ```
 
+
+Swift 5.0 or later on Linux, you might need to install libcurl by `apt-get install libcurl4-openssl-dev`.
+
 ## Usage
 
 ```swift

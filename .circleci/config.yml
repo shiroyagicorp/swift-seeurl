@@ -26,6 +26,7 @@ jobs:
       - image: swift:5.0
     steps:
       - checkout
+      - run: apt-get update && apt-get install -y libcurl4-openssl-dev
       - run: swift build
       - run: swift test
 
