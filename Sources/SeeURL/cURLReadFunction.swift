@@ -7,15 +7,15 @@
 //  Copyright © 2016 Shiroyagi Corporation. All rights reserved.
 //
 
-import CcURL
+import CcURLSwift
 
 public extension cURL {
     
-    public typealias ReadCallBack = curl_read_callback
+    typealias ReadCallBack = curl_read_callback
     
-    public static var ReadFunction: ReadCallBack { return curlReadFunction }
+    static var ReadFunction: ReadCallBack { return curlReadFunction }
     
-    public final class ReadFunctionStorage {
+    final class ReadFunctionStorage {
         
         public var data: [UInt8]
         

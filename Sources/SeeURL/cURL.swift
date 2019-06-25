@@ -7,7 +7,7 @@
 //  Copyright © 2016 Shiroyagi Corporation. All rights reserved.
 //
 
-import CcURL
+import CcURLSwift
 
 #if os(Linux)
     import Glibc

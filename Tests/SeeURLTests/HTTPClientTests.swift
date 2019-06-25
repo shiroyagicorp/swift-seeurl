@@ -7,7 +7,7 @@
 //  Copyright © 2016 Shiroyagi Corporation. All rights reserved.
 //
 
-import CcURL
+import CcURLSwift
 import XCTest
 import SeeURL
 import Foundation
@@ -150,7 +150,7 @@ final class HTTPClientTests: XCTestCase {
         
         print("response body size:", response.body.count)
         
-        
+        // TODO: verify checksum
         XCTAssertEqual(response.body.count, 122736672)
         
     }

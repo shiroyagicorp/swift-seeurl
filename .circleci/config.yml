@@ -7,9 +7,9 @@ jobs:
       - checkout
       - run: swift build
       - run: swift test
-  linux-swift4.0:
-    docker:
-      - image: swift:4.0
+  mac-swift5.0:
+    macos:
+      xcode: "10.2.0"
     steps:
       - checkout
       - run: swift build
@@ -21,11 +21,20 @@ jobs:
       - checkout
       - run: swift build
       - run: swift test
+  linux-swift5.0:
+    docker:
+      - image: swift:5.0
+    steps:
+      - checkout
+      - run: apt-get update && apt-get install -y libcurl4-openssl-dev
+      - run: swift build
+      - run: swift test
 
 workflows:
   version: 2
   build_and_test:
     jobs:
       - mac-swift4.1
-      - linux-swift4.0
+      - mac-swift5.0
       - linux-swift4.1
+      - linux-swift5.0

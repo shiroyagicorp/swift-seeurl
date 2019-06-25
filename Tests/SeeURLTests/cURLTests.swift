@@ -7,7 +7,7 @@
 //  Copyright © 2016 Shiroyagi Corporation. All rights reserved.
 //
 
-import CcURL
+import CcURLSwift
 import XCTest
 import SeeURL
 import Foundation

@@ -1,4 +1,4 @@
-// swift-tools-version:4.0
+// swift-tools-version:4.1
 import PackageDescription
 
 let package = Package(
@@ -10,8 +10,8 @@ let package = Package(
         .package(url: "https://github.com/IBM-Swift/CCurl.git", .upToNextMajor(from: "0.4.1"))
     ],
     targets: [
-        .target(name: "CcURL", dependencies: []), 
-        .target(name: "SeeURL", dependencies: ["CcURL"]),
+        .target(name: "CcURLSwift"), 
+        .target(name: "SeeURL", dependencies: ["CcURLSwift"]),
         .testTarget(name: "SeeURLTests", dependencies: ["SeeURL"])
     ]
 )

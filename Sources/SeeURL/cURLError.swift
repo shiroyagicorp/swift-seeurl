@@ -6,11 +6,11 @@
 //  Copyright © 2015 PureSwift. All rights reserved.
 //
 
-import CcURL
+import CcURLSwift
 
 public extension cURL {
     
-    public enum Error: UInt32, Swift.Error, CustomStringConvertible {
+    enum Error: UInt32, Swift.Error, CustomStringConvertible {
         
         case Undefined = 0x999999
         
