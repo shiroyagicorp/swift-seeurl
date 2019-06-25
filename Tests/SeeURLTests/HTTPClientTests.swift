@@ -150,7 +150,7 @@ final class HTTPClientTests: XCTestCase {
         
         print("response body size:", response.body.count)
         
-        
+        // TODO: verify checksum
         XCTAssertEqual(response.body.count, 122736672)
         
     }
