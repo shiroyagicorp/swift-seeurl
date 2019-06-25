@@ -8,17 +8,17 @@
 //
 
 import CCurl // IBM-Swift/CCurl
-import CcURL
+import CcURLSwift
 import Foundation
 import CoreFoundation
 
 public extension cURL {
     
-    public typealias WriteCallBack = curl_write_callback
+    typealias WriteCallBack = curl_write_callback
     
-    public static var WriteFunction: WriteCallBack { return curlWriteFunction }
+    static var WriteFunction: WriteCallBack { return curlWriteFunction }
     
-    public final class WriteFunctionStorage {
+    final class WriteFunctionStorage {
         
         public let data = NSMutableData()
         
