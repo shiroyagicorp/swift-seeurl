@@ -11,6 +11,9 @@ import CcURLSwift
 import XCTest
 import SeeURL
 import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 final class cURLTests: XCTestCase {
     
@@ -123,20 +126,7 @@ final class cURLTests: XCTestCase {
         
         XCTAssert(responseCode == 200, "\(responseCode) == 200")
         
-        #if swift(>=4.1)
-        // workaround, TODO:
-        // NSData(contentsOf: URL(string: url)!) not working???
-        var fetchedWithFoundationData: NSData!
-        let sema = DispatchSemaphore(value: 0)
-        let task = URLSession.shared.dataTask(with: URL(string: url)!) { (data, resp, error) in
-            fetchedWithFoundationData = NSData(data: data!)
-            sema.signal()
-        }
-        task.resume()
-        _ = sema.wait(timeout: .distantFuture)
-        #else
-        let fetchedWithFoundationData = try NSData(contentsOf: URL(string: url)!)
-        #endif
+        let fetchedWithFoundationData = NSData(contentsOf: URL(string: url)!)
         
         XCTAssert(storage.data == fetchedWithFoundationData)
     }

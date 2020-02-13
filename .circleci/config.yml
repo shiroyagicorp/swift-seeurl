@@ -1,29 +1,23 @@
 version: 2
 jobs:
-  mac-swift4.1:
+  mac-swift5.1:
     macos:
-      xcode: "9.3.0"
+      xcode: "11.3.1"
     steps:
       - checkout
       - run: swift build
       - run: swift test
-  mac-swift5.0:
-    macos:
-      xcode: "10.2.0"
-    steps:
-      - checkout
-      - run: swift build
-      - run: swift test
-  linux-swift4.1:
+  linux-swift5.1:
     docker:
-      - image: swift:4.1
+      - image: swift:5.1
     steps:
       - checkout
+      - run: apt-get update && apt-get install -y libcurl4-openssl-dev
       - run: swift build
       - run: swift test
-  linux-swift5.0:
+  linux-swift5.2:
     docker:
-      - image: swift:5.0
+      - image: swiftlang/swift:nightly-5.2-bionic
     steps:
       - checkout
       - run: apt-get update && apt-get install -y libcurl4-openssl-dev
@@ -34,7 +28,7 @@ workflows:
   version: 2
   build_and_test:
     jobs:
-      - mac-swift4.1
-      - mac-swift5.0
-      - linux-swift4.1
-      - linux-swift5.0
+      - mac-swift5.1
+      #- mac-swift5.2
+      - linux-swift5.1
+      - linux-swift5.2
