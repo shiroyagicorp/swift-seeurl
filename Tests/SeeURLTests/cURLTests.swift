@@ -11,6 +11,9 @@ import CcURLSwift
 import XCTest
 import SeeURL
 import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 final class cURLTests: XCTestCase {
     
