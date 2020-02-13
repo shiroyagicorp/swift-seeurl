@@ -12,7 +12,7 @@ jobs:
       - image: swift:5.1
     steps:
       - checkout
-      #- run: apt-get update && apt-get install -y libcurl4-openssl-dev
+      - run: apt-get update && apt-get install -y libcurl4-openssl-dev
       - run: swift build
       - run: swift test
   linux-swift5.2:
@@ -20,7 +20,7 @@ jobs:
       - image: swiftlang/swift:nightly-5.2-bionic
     steps:
       - checkout
-      #- run: apt-get update && apt-get install -y libcurl4-openssl-dev
+      - run: apt-get update && apt-get install -y libcurl4-openssl-dev
       - run: swift build
       - run: swift test
 
